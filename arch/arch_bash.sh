@@ -22,8 +22,12 @@ pacman -S --noconfirm archlinuxcn-keyring axel \
   fcitx fcitx-rime fcitx-configtool fcitx-googlepinyin fcitx-im \
   git gcc konsole mpv noto-fonts-cjk nano \
   openssh p7zip python-pip python2 python2-pip \
+  sudo xorg plasma sddm\
   visual-studio-code-bin vim wget yaourt
 echo "[✔] Installing base utils                         "
+systemctl enable sddm
+systemctl disable netctl
+systemctl enable NetworkManager
 pacman -Syyu
 pacman -S --noconfirm google-chrome
 echo "[✔] Installing google-chrome                      "
