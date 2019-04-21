@@ -6,7 +6,7 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch
 " >>/etc/pacman.conf
 echo "[✔] Adding the tsinghua archlinucn mirrors        "
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-echo "Server = http://mirrors.huaweicloud.com/archlinux/$repo/os/$arch" >>/etc/pacman.d/mirrorlist
+echo "Server = http://mirrors.huaweicloud.com/archlinux/\$repo/os/\$arch" >>/etc/pacman.d/mirrorlist
 echo "[✔] Adding the huaweicloud arch mirrors           "
 echo "[✔] Installing base utils                         "
 pacman -Syu --noconfirm haveged
