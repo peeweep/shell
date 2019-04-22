@@ -22,25 +22,23 @@ pacman-key --init
 pacman-key --populate archlinux
 pacman-key --populate archlinuxcn
 pacman -S --noconfirm archlinuxcn-keyring
-echo "[✔] Fix pacman archlinuxcn-keyring in gnupg-2.1   "
+echo "[✔] Fix pacman archlinuxcn-keyring in gnupg-2.1"
 
 pacman -Syyu
 pacman -S --noconfirm axel clang curl dnsutils dolphin \
   fcitx fcitx-rime fcitx-configtool fcitx-googlepinyin fcitx-im \
   git gcc mpv noto-fonts-cjk nano openssh p7zip \
   python-pip python2 python2-pip visual-studio-code-bin vim wget yaourt
-echo "[✔] Installing base utils                         "
-
-
+echo "[✔] Installing base utils"
 
 systemctl enable sddm
 systemctl disable netctl
 systemctl enable NetworkManager
 pacman -Syyu
 pacman -S --noconfirm google-chrome
-echo "[✔] Installing google-chrome                      "
+echo "[✔] Installing google-chrome"
 echo "GTK_IM_MODULE=fcitx" >>~/.xprofile
 echo "QT_IM_MODULE=fcitx" >>~/.xprofile
 echo "XMODIFIERS=\"@im=fcitx\"" >>~/.xprofile
-echo "[✔] Add fcitx config to xprofile                  "
+echo "[✔] Add fcitx config to xprofile"
 echo "**************************************************"
