@@ -25,7 +25,7 @@ pacman -S --noconfirm archlinuxcn-keyring
 echo "[✔] Fix pacman archlinuxcn-keyring in gnupg-2.1"
 
 pacman -Syyu
-pacman -S --noconfirm axel clang curl dnsutils dolphin \
+pacman -S --noconfirm axel clang curl dnsutils \
   fcitx fcitx-rime fcitx-configtool fcitx-googlepinyin fcitx-im \
   git gcc mpv noto-fonts-cjk nano openssh p7zip \
   python-pip python2 python2-pip visual-studio-code-bin vim wget yaourt
