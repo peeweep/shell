@@ -6,7 +6,7 @@ cp -r ~/Documents/iTerm2-Color-Schemes/xfce4terminal/colorschemes ~/.local/share
 rm -rf ~/Documents/iTerm2-Color-Schemes
 echo "You can change xfce4-terminal Color theme at 
 Konsole >> Edit >> Preferences >> Color >> Presets,
-I recommand [Calamity]."
+I recommand [Calamity] / [Builtin Tango Dark]."
 pacman -S --noconfirm nerd-fonts-complete
 echo "You can change xfce4-terminal font at
 Konsole >> Edit >> Preferences >> Appearance,
