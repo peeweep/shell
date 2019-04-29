@@ -25,7 +25,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time
 # for nerd-font
 POWERLEVEL9K_MODE="nerdfont-complete"
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source  /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 '
 sed -i "s/$before/$after/g" ~/.zshrc
 pacman -S --noconfirm vim
