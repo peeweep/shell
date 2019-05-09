@@ -1,8 +1,8 @@
 #!/bin/bash
 curDate=$(date +%Y%m%d%H%M%S)
-pathname='/root'
-folder_name='rssbot'
-folder_id='16P2064P2d2SPGaSUfF4wS9JNqJ_MRAZv'
-7z a "$pathname"/"$curDate".7z "$pathname"/"$folder_name" 
-gdrive upload "$pathname"/"$curDate".7z  -p "$folder_id"
-rm "$pathname"/"$curDate".7z
+path_name='/path_name'
+folder_name='folder_name'
+folder_id='folder_id'
+7z a "$path_name"/"$curDate".7z "$path_name"/"$folder_name" 
+gdrive upload "$path_name"/"$curDate".7z  -p "$folder_id"
+rm "$path_name"/"$curDate".7z
