@@ -2,7 +2,12 @@
 
 ![](mtproxy.jpg)
 
-Useage
+使用
 ```
 chmod +x mtproxy.sh && sudo bash mtproxy.sh
+```
+
+立即更新
+```
+sudo bash mtproxy.sh update_port
 ```
