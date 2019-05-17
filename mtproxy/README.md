@@ -9,7 +9,7 @@
 
 使用
 ```
-chmod +x mtproxy.sh && sudo bash mtproxy.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/itworkonmypc/bash/master/mtproxy/mtproxy.sh && chmod +x mtproxy.sh && sudo bash mtproxy.sh
 ```
 立即修改端口
 ```
