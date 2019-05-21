@@ -1,17 +1,14 @@
-#!/bin/bash
-echo "**************************************************"
 git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
 mkdir -p ~/.local/share/xfce4/terminal
 cp -r ~/Documents/iTerm2-Color-Schemes/xfce4terminal/colorschemes ~/.local/share/xfce4/terminal/  
 rm -rf ~/Documents/iTerm2-Color-Schemes
-echo "You can change xfce4-terminal Color theme at 
-Konsole >> Edit >> Preferences >> Color >> Presets,
+echo "You can change xfce4-terminal Color theme at Edit >> Preferences >> Color >> Presets,
 I recommand [Calamity] / [Builtin Tango Dark]."
+
 pacman -S --noconfirm nerd-fonts-complete
-echo "You can change xfce4-terminal font at
-Konsole >> Edit >> Preferences >> Appearance,
+echo "You can change xfce4-terminal font at Edit >> Preferences >> Appearance,
 I recommand [SauceCodePro Nerd Font Mono Medium]."
-echo "**************************************************"
+
 pacman -S --noconfirm zsh zsh-autosuggestions
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 chsh -s /bin/zsh
@@ -28,6 +25,7 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 '
 sed -i "s/$before/$after/g" ~/.zshrc
+
 pacman -S --noconfirm vim
 curl -sLf https://spacevim.org/install.sh | bash
 vim

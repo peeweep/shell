@@ -1,11 +1,10 @@
-#!/bin/bash
-echo "**************************************************"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install wget curl axel git gcc vim 
 brew cask install google-chrome iterm2 visual-studio-Code
 git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
 echo "You can import  Afterglow color template in Preferences - Profiles - Color Presets,
 I recommand [Afterglow]."
+
 brew tap caskroom/fonts
 brew cask install font-sourcecodepro-nerd-font
 echo "You can setting font in Preferences -> Profiles -> Text,
@@ -28,6 +27,6 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 source  /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 '
 sed -i "s/$before/$after/g" ~/.zshrc
-pacman -S --noconfirm vim
+
 curl -sLf https://spacevim.org/install.sh | bash
 vim
