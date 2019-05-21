@@ -28,7 +28,7 @@ pacman -Syyu
 pacman -S --noconfirm axel clang curl dnsutils \
   fcitx fcitx-rime fcitx-configtool fcitx-googlepinyin fcitx-im \
   git gcc mpv noto-fonts-cjk nano openssh p7zip \
-  python-pip python2 python2-pip visual-studio-code-bin vim wget yaourt
+  python-pip python2 python2-pip visual-studio-code-bin vim wget yay
 echo "[✔] Installing base utils"
 
 systemctl enable sddm
