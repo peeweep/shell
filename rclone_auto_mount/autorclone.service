@@ -1,0 +1,7 @@
+[Unit]
+Description=autorclone
+[Service]
+User=your_username
+ExecStart=/usr/bin/bash /your_path/rclone_mount.sh
+[Install]
+WantedBy=multi-user.target
