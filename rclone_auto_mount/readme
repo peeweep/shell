@@ -1,0 +1,6 @@
+Usage:
+cp rclone_mount.sh to a custom path
+using sudo cp autorclone.service to /etc/systemd/system/
+Then: systemctl enable autorclone
+
+
