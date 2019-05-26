@@ -63,6 +63,9 @@ check_fcitx() {
     fi
 }
 
+# Get Permission
+sudo pacman -Syyu
+
 check_archlinuxcn
 check_mirrors
 check_cn_keyring
