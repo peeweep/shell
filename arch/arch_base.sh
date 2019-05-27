@@ -89,4 +89,3 @@ check_fcitx
 #         echo "${package_name} has been installed"
 #     fi
 # }
-
