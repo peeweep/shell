@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
 check_archlinuxcn() {
-    line1="[archlinuxcn]"
+    word="[archlinuxcn]"
     file="/etc/pacman.conf"
-    if [ -z "$(grep ${line1} ${file})" ]; then
+    if [ -z "$(grep ${word} ${file})" ]; then
         echo "[archlinuxcn]" >>${file}
         echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch" >>${file}
         echo "[✔] Adding the tsinghua archlinucnx mirrors"
@@ -54,9 +54,9 @@ check_fcitx() {
     word="GTK_IM_MODULE=fcitx"
     file="~/.xprofile"
     if [ -z "$(grep ${word} ${file})" ]; then
-        echo "GTK_IM_MODULE=fcitx" >>~/.xprofile
-        echo "QT_IM_MODULE=fcitx" >>~/.xprofile
-        echo "XMODIFIERS=\"@im=fcitx\"" >>~/.xprofile
+        echo "GTK_IM_MODULE=fcitx" >>${file}
+        echo "QT_IM_MODULE=fcitx" >>${file}
+        echo "XMODIFIERS=\"@im=fcitx\"" >>${file}
         echo "[✔] Add fcitx config to xprofile"
     else
         echo "fcitx has been setup"
