@@ -1,0 +1,28 @@
+# Entware:
+
+#umount /dev/sda3
+mkfs.ext4 /dev/sda3
+mkdir /mnt/sda3
+mount /dev/sda3 /mnt/sda3
+
+mkdir /opt
+mkdir /mnt/sda3/opt
+mount -o bind /mnt/sda3/opt /opt
+
+uname -m
+wget -O - http://bin.entware.net/x64-k3.2/installer/generic.sh | /bin/sh
+
+vim /etc/rc.local
+mkdir -p /opt
+mount -o bind /mnt/sda3/opt /opt
+/opt/etc/init.d/rc.unslung start
+
+vim /etc/profile
+. /opt/etc/profile
+
+reboot
+
+
+# onmp
+sh -c "$(curl -kfsSL https://raw.githubusercontent.com/xzhih/ONMP/master/oneclick.sh)"
+
