@@ -1,5 +1,17 @@
 #!/usr/bin/bash
 
+init() {
+  echo -n "Enter the origin folder: "
+  read origin_folder
+  echo "The origin folder is setting as ${origin_folder}"
+  echo "Make sure your team drive named as 1 2 3 ..."
+  echo -n "choose the user_node your start ( 1 / 2 / 3): "
+  read user_node
+  rm rclone.log
+  rclone copy ${origin_folder} ${user_node}:${origin_folder} --rc -vv -P
+  echo "rclone copy ${origin_folder} ${user_node}:${origin_folder}  --rc -vv -P" >>rclone.log
+  echo
+}
 get_bytes() {
   curTime=$(date +%Y%m%d%H%M%S)
   rclone rc core/stats >>pid_${curTime}.txt
@@ -24,9 +36,11 @@ is_restart() {
 check_log() {
   rclone_log="rclone.log"
   if [ ! -f "${rclone_log}" ]; then
-    echo "rclone.log not found."
-    echo "initialize setting"
-    bash ./rclone_initialize.sh
+    echo "********************************"
+    echo "* Rclone.log not found."
+    echo "* Initializing settings"
+    echo "********************************"
+    init
   else
     is_restart
   fi
