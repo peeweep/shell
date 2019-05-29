@@ -8,8 +8,9 @@ init() {
   echo -n "choose the user_node your start ( 1 / 2 / 3): "
   read user_node
   rm rclone.log
-  rclone copy ${origin_folder} ${user_node}:${origin_folder} --rc -vv -P
-  echo "rclone copy ${origin_folder} ${user_node}:${origin_folder}  --rc -vv -P" >>rclone.log
+  destpath=$(echo $origin_folder | awk -F':' '{print $2}')
+  rclone copy ${origin_folder} ${user_node}:${sourcepath} --rc -vv -P
+  echo "rclone copy ${origin_folder} ${user_node}:${sourcepath}  --rc -vv -P" >>rclone.log
   echo
 }
 get_bytes() {
@@ -28,8 +29,9 @@ is_restart() {
     origin_folder=$(awk '{print $3}' rclone.log)
     user_node=$(awk '{print $4}' rclone.log | awk -F: '{print $1}')
     user_node=$((user_node + 1))
-    rclone copy ${origin_folder} ${user_node}:${origin_folder} --rc -vv -P
-    echo "rclone copy ${origin_folder} ${user_node}:${origin_folder} --rc -vv -P" >>rclone.log
+    destpath=$(echo $origin_folder | awk -F':' '{print $2}')
+    rclone copy ${origin_folder} ${user_node}:${destpath} --rc -vv -P
+    echo "rclone copy ${origin_folder} ${user_node}:${destpath} --rc -vv -P" >>rclone.log
   fi
 }
 
