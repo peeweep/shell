@@ -1,0 +1,1 @@
+wget -N --no-check-certificate https://gist.githubusercontent.com/MineBartekSA/1d42d6973ddafb82793fd49b4fb06591/raw/c24b8b47d275ad38c633d8882044b3e1e5036f86/catbox && chmox +x catbox && sudo mv catbox /bin/
