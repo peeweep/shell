@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
 sudo cp ~/Documents/iTerm2-Color-Schemes/konsole/*.colorscheme /usr/share/konsole
 rm -rf ~/Documents/iTerm2-Color-Schemes
@@ -27,7 +28,6 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 '
 sed -i "s/${before}/${after}/g" ~/.zshrc
 
-
-sudo pacman -S  vim
+sudo pacman -S vim
 curl -sLf https://spacevim.org/install.sh | bash
 vim
