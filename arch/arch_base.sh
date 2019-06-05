@@ -24,7 +24,7 @@ echo "archlinuxcn-keyring installed"
 
 sudo pacman -Syu axel chromium clang curl dnsutils fcitx fcitx-rime fcitx-configtool fcitx-im \
   flameshot gcc gdb git mpv nano noto-fonts-cjk openssh p7zip python-pip python2 python2-pip \
-  shellcheck shfmt telegram-desktop ttf-opensans vim visual-studio-code-bin wget yay
+  shellcheck shfmt telegram-desktop ttf-opensans unrar vim visual-studio-code-bin wget yay
 echo "[✔] Installing base utils"
 
 {
