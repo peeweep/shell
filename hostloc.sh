@@ -1,10 +1,10 @@
-# From: https://github.com/mixool/script
 #!/usr/bin/env bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 # Usage:
 ## wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/debian-9/hostloc.sh && chmod +x hostloc.sh.sh && bash hostloc.sh
 ### bash <(curl -s https://raw.githubusercontent.com/mixool/script/debian-9/hostloc.sh) ${username} ${password}
+# From: https://github.com/mixool/script
 
 # user info: change them to yours or use parameters instead.
 username="$1"
