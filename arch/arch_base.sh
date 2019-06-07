@@ -1,13 +1,13 @@
 #!/usr/bin/bash
 {
-  echo "[archlinuxcn]" 
+  echo "[archlinuxcn]"
   echo "SigLevel = Optional TrustedOnly"
   echo "Server = http://mirror.bjtu.edu.cn/archlinuxcn/\$arch"
 } | sudo tee -a /etc/pacman.conf
 echo "[✔] Adding archlinuxcn mirrors"
 
 sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-echo "Server = http://mirror.bjtu.edu.cn/archlinux/\$repo/os/\$arch" >> sduo tee -a /etc/pacman.d/mirrorlist
+echo "Server = http://mirror.bjtu.edu.cn/archlinux/\$repo/os/\$arch" | sudo tee -a /etc/pacman.d/mirrorlist
 echo "[✔] Adding the huaweicloud arch mirrors"
 
 pacman -Syu archlinuxcn-keyring
