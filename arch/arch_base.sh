@@ -10,7 +10,7 @@ sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 echo "Server = http://mirror.bjtu.edu.cn/archlinux/\$repo/os/\$arch" | sudo tee -a /etc/pacman.d/mirrorlist
 echo "[✔] Adding the huaweicloud arch mirrors"
 
-pacman -Syu archlinuxcn-keyring
+sudo pacman -Syu archlinuxcn-keyring
 echo "archlinuxcn-keyring installed"
 #pacman -Syu haveged
 #systemctl start haveged
