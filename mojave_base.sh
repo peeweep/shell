@@ -2,7 +2,7 @@
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew install axel clang-format curl gcc git gnupg p7zip shellcheck shfmt vim wget
-brew cask install chromium iina iterm2 squirrel visual-studio-Code telegram-desktop
+brew cask install google-chrome iina iterm2 squirrel visual-studio-Code telegram
 
 git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
 echo "You can import  Afterglow color template in Preferences - Profiles - Color Presets,
