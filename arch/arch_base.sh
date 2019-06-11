@@ -31,8 +31,8 @@ sudo pacman-key --lsign-key 3056513887B78AEB
 echo "chaotic-aur Verified"
 
 sudo pacman -Syu axel chromium clang curl dnsutils fcitx fcitx-rime fcitx-configtool fcitx-im \
-  flameshot gcc gdb git mpv nano noto-fonts-cjk openssh p7zip python-pip python2 python2-pip \
-  shellcheck shfmt telegram-desktop ttf-opensans unrar vim visual-studio-code-bin wget yay
+  flameshot gcc gdb git mpv nano net-tools noto-fonts-cjk openssh p7zip python-pip python2 python2-pip \
+  shellcheck shfmt telegram-desktop-bin ttf-opensans unrar vim visual-studio-code-bin wget yay
 echo "[✔] Installing base utils"
 
 {
@@ -41,3 +41,9 @@ echo "[✔] Installing base utils"
   echo "XMODIFIERS=\"@im=fcitx\""
 } | tee -a ~/.xprofile
 echo "[✔] Add fcitx config to xprofile"
+
+before='Exec=telegram-desktop -- %u'
+after='Exec=env QT_IM_MODULE=fcitx telegram-desktop -- %u'
+file='/usr/share/applications/telegramdesktop.desktop'
+sudo sed -i "s/${before}/${after}/g" ${file}
+echo "[✔] Add fcitx config to telegramdesktop.desktop"
