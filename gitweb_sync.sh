@@ -7,14 +7,16 @@ clone() {
 
 contrast() {
   current_packed_refs=$(awk <"${repo_folder}"/packed-refs 'NR==2{print $1}')
-  newset_commit=$(curl -s "${repo_url}"/commits/master.atom | grep Commit | sed -n 2p)
-  echo "${newset_commit}" >"${curDate}"newset_commit
+  newest_commit=$(curl -s "${repo_url}"/commits/master.atom | grep Commit | sed -n 2p)
+  echo "${newest_commit}" >"${curDate}"newest_commit
 
-  if grep "${current_packed_refs}" "${curDate}"newset_commit; then
+  if grep "${current_packed_refs}" "${curDate}"newest_commit; then
     echo "newest, exiting"
+    rm "${curDate}"newest_commit
     exit 1
   else
     echo "begin remove old folder and clone the new one"
+    rm "${curDate}"newest_commit
     clone
   fi
 }
