@@ -2,7 +2,7 @@
 
 clone() {
   rm -rf "${repo_folder}"
-  git clone --bare "${repo_url}"
+  git clone --bare "${repo_url}" "${repo_folder}"
 }
 
 contrast() {
