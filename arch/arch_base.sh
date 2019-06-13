@@ -30,7 +30,7 @@ sudo pacman-key --keyserver keys.mozilla.org -r 3056513887B78AEB
 sudo pacman-key --lsign-key 3056513887B78AEB
 echo "chaotic-aur Verified"
 
-sudo pacman -Syu axel chromium clang curl dnsutils fcitx fcitx-rime fcitx-configtool fcitx-im \
+sudo pacman -Syu axel chromium clang cloc curl dnsutils fcitx fcitx-rime fcitx-configtool fcitx-im \
 	flameshot gcc gdb git mpv nano net-tools noto-fonts-cjk openssh p7zip python-pip python2 python2-pip \
 	shellcheck shfmt telegram-desktop-bin ttf-opensans unrar vim visual-studio-code-bin wget yay
 echo "[✔] Installing base utils"
