@@ -37,5 +37,3 @@ else
   contrast
 fi
 
-# crontab: */1 * * * * /bin/bash /usr/bin/gitweb_sync user_name repository
-
