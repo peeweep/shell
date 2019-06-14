@@ -1,3 +1,6 @@
+one click install:
+bash gitweb_init.sh
+
 mv gitweb_sync.sh /usr/bin/gitweb_sync
 
 update immediately:
