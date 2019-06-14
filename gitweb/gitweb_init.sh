@@ -30,18 +30,6 @@ git_description() {
   echo "${description}" | sudo tee ${description_file}
 }
 
-gitweb_theme_move() {
-  sudo mv "${gitweb_folder}"/static/git-favicon.png "${gitweb_folder}"/static/git-favicon.png.bak
-  sudo mv "${gitweb_folder}"/static/git-logo.png "${gitweb_folder}"/static/git-logo.png.bak
-  sudo mv "${gitweb_folder}"/static/gitweb.css "${gitweb_folder}"/static/gitweb.css.bak
-}
-
-gitweb_theme_copy() {
-  sudo cp "${gitweb_folder}"/gitweb-theme/git-favicon.png "${gitweb_folder}"/static/git-favicon.png
-  sudo cp "${gitweb_folder}"/gitweb-theme/git-logo.png "${gitweb_folder}"/static/git-logo.png
-  sudo cp "${gitweb_folder}"/gitweb-theme/gitweb.css "${gitweb_folder}"/static/gitweb.css
-}
-
 gitweb_theme() {
   repository="https://github.com/kogakure/gitweb-theme.git"
   gitweb_folder="/usr/share/gitweb"
