@@ -1,0 +1,8 @@
+mv gitweb_sync.sh /usr/bin/gitweb_sync
+
+update immediately:
+/bin/bash /usr/bin/gitweb_sync user_name repository
+
+crontab: 
+*/1 * * * * /bin/bash /usr/bin/gitweb_sync user_name repository
+
