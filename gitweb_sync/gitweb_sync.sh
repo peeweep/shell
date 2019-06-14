@@ -23,9 +23,8 @@ contrast() {
 
 curDate=$(date +%Y%m%d%H%M%S)
 gitweb_folder="/gitweb"
-repo_folder="${gitweb_folder:?}/$1.git"
-user_name="lusty01"
-repo_url="https://github.com/${user_name}/$1"
+repo_folder="${gitweb_folder:?}/$2.git"
+repo_url="https://github.com/$1/$2"
 
 network_status() {
   curl --connect-timeout 15 --max-time 20 --head --silent "${repo_url}" | grep '200 OK'
@@ -37,3 +36,6 @@ else
   echo "begin contrast "
   contrast
 fi
+
+# crontab: */1 * * * * /bin/bash /usr/bin/gitweb_sync user_name repository
+
