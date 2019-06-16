@@ -2,11 +2,11 @@
 
 clone() {
   rm -rf "${repo_folder}"
-  git clone --bare "${repo_url}" "${repo_folder}"
+  git clone "${repo_url}" "${repo_folder}"
 }
 
 contrast() {
-  current_packed_refs=$(awk <"${repo_folder}"/packed-refs 'NR==2{print $1}')
+  current_packed_refs=$(awk <"${repo_folder}"/.git/packed-refs 'NR==2{print $1}')
   newest_commit=$(curl -s "${repo_url}"/commits/master.atom | grep Commit | sed -n 2p)
   echo "${newest_commit}" >"${curDate}"newest_commit
 
