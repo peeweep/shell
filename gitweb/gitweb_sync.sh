@@ -23,7 +23,7 @@ contrast() {
 
 curDate=$(date +%Y%m%d%H%M%S)
 gitweb_folder="/gitweb"
-repo_folder="${gitweb_folder:?}/$2.git"
+repo_folder="${gitweb_folder:?}/$2"
 repo_url="https://github.com/$1/$2"
 
 network_status() {
