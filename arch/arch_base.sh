@@ -22,7 +22,7 @@ pacman_archlinuxcn() {
 pacman_base() {
 	sudo pacman -Syu axel chromium clang cloc curl dnsutils fcitx fcitx-rime fcitx-configtool fcitx-im \
 		flameshot gcc gdb git mpv nano net-tools noto-fonts-cjk openssh p7zip python-pip python2 python2-pip \
-		shellcheck shfmt telegram-desktop-bin ttf-opensans unrar vim visual-studio-code-bin wget yay
+		shellcheck shfmt telegram-desktop-bin ttf-opensans unrar updpkgsums vim visual-studio-code-bin wget yay
 	echo "[✔] Installing base utils"
 }
 

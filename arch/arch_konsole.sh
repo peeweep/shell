@@ -24,7 +24,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time)
 # for nerd-font
 POWERLEVEL9K_MODE="nerdfont-complete"
-
+source /usr/share/doc/pkgfile/command-not-found.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 '
 sed -i "s/${before}/${after}/g" ~/.zshrc
