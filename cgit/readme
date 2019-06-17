@@ -1,0 +1,10 @@
+one click install:
+bash install.sh
+
+mv cgit_sync.sh /usr/bin/cgit_sync
+
+update immediately:
+/bin/bash /usr/bin/cgit_sync user_name repository
+
+crontab: 
+*/1 * * * * /bin/bash /usr/bin/cgit_sync user_name repository

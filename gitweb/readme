@@ -1,5 +1,5 @@
 one click install:
-bash gitweb_init.sh
+bash install.sh
 
 mv gitweb_sync.sh /usr/bin/gitweb_sync
 
@@ -8,4 +8,3 @@ update immediately:
 
 crontab: 
 */1 * * * * /bin/bash /usr/bin/gitweb_sync user_name repository
-
