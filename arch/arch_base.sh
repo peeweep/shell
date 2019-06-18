@@ -20,9 +20,11 @@ pacman_archlinuxcn() {
 	echo "[✔]archlinuxcn-keyring installed"
 }
 pacman_base() {
-	sudo pacman -Syu axel chromium clang cloc curl dnsutils fcitx fcitx-rime fcitx-configtool fcitx-im \
-		flameshot gcc gdb git mpv nano net-tools noto-fonts-cjk openssh p7zip python-pip python2 python2-pip \
-		shellcheck shfmt telegram-desktop-bin ttf-opensans unrar updpkgsums vim visual-studio-code-bin wget yay
+	sudo pacman -Syu axel chromium clang clion clion-cmake clion-gdb clion-jre clion-lldb cloc \
+		cmake curl dnsutils fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git fcitx5-qt5-git \
+		flameshot gcc gdb git lldb make mpv nano net-tools noto-fonts-cjk openssh p7zip perf \
+		python-pip python2 python2-pip shellcheck shfmt systemtap telegram-desktop ttf-opensans \
+		unrar updpkgsums valgrind vim visual-studio-code-bin wget yay
 	echo "[✔] Installing base utils"
 }
 
@@ -82,6 +84,15 @@ fcitx_xprofile() {
 	echo "[✔] Add fcitx config to xprofile"
 }
 
+fcitx5_xprofile() {
+	{
+		echo "GTK_IM_MODULE=fcitx5"
+		echo "QT_IM_MODULE=fcitx5"
+		echo "XMODIFIERS=\"@im=fcitx\""
+	} | tee -a ~/.pam_environment
+	echo "[✔] Add fcitx5 config to pam_environment"
+}
+
 fcitx_telegram() {
 	before='Exec=telegram-desktop -- %u'
 	after='Exec=env QT_IM_MODULE=fcitx telegram-desktop -- %u'
@@ -96,4 +107,5 @@ fcitx_init() {
 }
 
 pacman_init
-fcitx_init
+#fcitx_init
+fcitx5_xprofile
