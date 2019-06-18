@@ -84,15 +84,6 @@ fcitx_xprofile() {
 	echo "[✔] Add fcitx config to xprofile"
 }
 
-fcitx5_xprofile() {
-	{
-		echo "GTK_IM_MODULE=fcitx5"
-		echo "QT_IM_MODULE=fcitx5"
-		echo "XMODIFIERS=\"@im=fcitx\""
-	} | tee -a ~/.pam_environment
-	echo "[✔] Add fcitx5 config to pam_environment"
-}
-
 fcitx_telegram() {
 	before='Exec=telegram-desktop -- %u'
 	after='Exec=env QT_IM_MODULE=fcitx telegram-desktop -- %u'
@@ -106,6 +97,23 @@ fcitx_init() {
 	fcitx_telegram
 }
 
+fcitx5_profile() {
+	sudo killall -9 fcitx5
+	wget https://fars.ee/-9Of -O ~/.config/fcitx5/profile
+}
+
+fcitx5_pam_environment() {
+	{
+		echo "GTK_IM_MODULE=fcitx5"
+		echo "QT_IM_MODULE=fcitx5"
+		echo "XMODIFIERS=\"@im=fcitx\""
+	} | tee -a ~/.pam_environment
+	echo "[✔] Add fcitx5 config to pam_environment"
+}
+fcitx5_init() {
+	fcitx5_profile
+	fcitx5_pam_environment
+}
 pacman_init
 #fcitx_init
-fcitx5_xprofile
+fcitx5_init
