@@ -78,9 +78,9 @@ crontab_add() {
   rm -r "${curPath}/crontab.bak"
   cron_config=$(crontab -l | grep "${curFile} update")
   if [[ -z ${cron_config} ]]; then
-    echo -e "crontab add fail!" && exit 1
+    echo -e "[×] crontab add fail!" && exit 1
   else
-    echo -e "crontab add success!"
+    echo -e "[✓] crontab add success!"
   fi
 }
 
@@ -91,9 +91,9 @@ crontab_del() {
   rm -r "${curPath}/crontab.bak"
   cron_config=$(crontab -l | grep "${curFile} update")
   if [[ -n ${cron_config} ]]; then
-    echo -e "crontab remove fail!" && exit 1
+    echo -e "[×] crontab remove fail!" && exit 1
   else
-    echo -e "crontab remove success!"
+    echo -e "[✓] crontab remove success!"
   fi
 }
 
