@@ -18,8 +18,11 @@ get_result() {
 
 download_pic() {
   get_result
+  curUser=$(who am i | awk '{print $1}')
   curDate=$(date +%Y%m%d)
-  pic_location="/home/lusty01/Pictures/bing/""${curDate}".jpg
+  pic_folder="/home/${curUser}/Pictures/bing"
+  pic_location="${pic_folder}/${curDate}".jpg
+  mkdir -p "${pic_folder}"
   wget -q "${result}" -O "${pic_location}"
   echo "[✓] ${curDate}.jpg saved to ${pic_location}"
 }
@@ -121,14 +124,6 @@ elif [[ "${action}" == "--crondel" ]]; then
   crontab_del
 elif [[ "${action}" == "-cd" ]]; then
   crontab_del
-elif [[ "${action}" == "-h" ]]; then
-  help_document
-elif [[ "${action}" == "help" ]]; then
-  help_document
-elif [[ "${action}" == "--help" ]]; then
-  help_document
-elif [[ -z "${action}" ]]; then
-  help_document
 else
   help_document
 fi
