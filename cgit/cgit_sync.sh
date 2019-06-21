@@ -36,4 +36,3 @@ else
   echo "begin contrast "
   contrast
 fi
-

@@ -3,7 +3,7 @@
 nginx_file() {
   nginx_file="/etc/nginx/conf.d/cgit.conf"
   example="example.com"
-  sudo wget https://fars.ee/Lh5B -O ${nginx_file}
+  sudo wget https://raw.githubusercontent.com/Lusty01/shell/master/cgit/conf/nginx.conf -O ${nginx_file}
   echo "enter your server_name for nginx config file, default: example.com"
   read -r server_name
   [[ -z "${server_name}" ]] && server_name="example.com"
@@ -13,7 +13,7 @@ nginx_file() {
 cgit_file() {
   default_projectroot='/srv/git'
   cgit_file="/etc/cgitrc"
-  sudo wget  https://fars.ee/PXB4 -O ${cgit_file}
+  sudo wget https://raw.githubusercontent.com/Lusty01/shell/master/cgit/conf/custom_cgit.conf -O ${cgit_file}
   echo "enter your cgit projectroot, default: /cgit"
   read -r projectroot
   [[ -z "${projectroot}" ]] && projectroot='/cgit'
@@ -31,7 +31,6 @@ git_description() {
   echo "${description}" | sudo tee ${description_file}
 }
 
-
 restart_service() {
   sudo service fcgiwrap stop
   sudo service nginx stop
@@ -39,8 +38,7 @@ restart_service() {
   sudo service nginx start
 }
 
-
-sudo apt install wget nginx nginx-common git cgit fcgiwrap 
+sudo apt install wget nginx nginx-common git cgit fcgiwrap
 nginx_file
 cgit_file
 git_description

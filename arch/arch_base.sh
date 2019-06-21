@@ -22,8 +22,8 @@ pacman_archlinuxcn() {
 pacman_base() {
 	sudo pacman -Syu axel chromium clang clion clion-cmake clion-gdb clion-jre clion-lldb cloc \
 		cmake curl dnsutils fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git fcitx5-qt5-git \
-		flameshot gcc gdb git lldb make mpv nano net-tools noto-fonts-cjk openssh p7zip perf \
-		python-pip python2 python2-pip shellcheck shfmt systemtap telegram-desktop ttf-opensans \
+		flameshot gcc gdb git linux-headers lldb make mpv nano net-tools noto-fonts-cjk openssh p7zip perf \
+		python-pip python2 python2-pip shellcheck shfmt systemtap telegram-desktop tldr ttf-opensans \
 		unrar updpkgsums valgrind vim visual-studio-code-bin wget yay
 	echo "[✔] Installing base utils"
 }

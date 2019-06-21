@@ -3,7 +3,7 @@
 nginx_file() {
   nginx_file="/etc/nginx/conf.d/gitweb.conf"
   example="example.com"
-  sudo wget http://fars.ee/HJ9e -O ${nginx_file}
+  sudo wget https://raw.githubusercontent.com/Lusty01/shell/master/cgit/conf/nginx.conf -O ${nginx_file}
   echo "enter your server_name for nginx config file, default: example.com"
   read -r server_name
   [[ -z "${server_name}" ]] && server_name="example.com"
@@ -18,7 +18,7 @@ gitweb_file() {
   [[ -z "${projectroot}" ]] && projectroot='/gitweb'
   sudo mkdir -p ${projectroot}
   sudo sed -i "s|${default_projectroot}|${projectroot}|" ${gitweb_file}
-  curl https://fars.ee/4rR9 | sudo tee -a ${gitweb_file}
+  curl https://raw.githubusercontent.com/Lusty01/shell/master/cgit/conf/custom_gitweb.conf | sudo tee -a ${gitweb_file}
 }
 
 git_description() {
