@@ -12,19 +12,36 @@ curFile=$(basename "${BASH_SOURCE}")
 get_result() {
   pic_1080_url=$(curl -s "${api_url}" | grep -P "url.*?jpg&pid=hp" -o | awk -F '"' '{print $3}')
   result="bing.com${pic_1080_url}"
-  current_url=$(curl -s "${api_url}" | grep -P "urlbase.*?copyright" -o | awk -F '"' '{print $3}')
-  echo "[✓] current pic is http://bing.com${current_url}"
+  # current_url=$(curl -s "${api_url}" | grep -P "urlbase.*?copyright" -o | awk -F '"' '{print $3}')
+  echo "[✓] current pic is http://bing.com${pic_1080_url}"
 }
 
 download_pic() {
   get_result
-  curUser=$(who am i | awk '{print $1}')
+  curUser="$USER"
   curDate=$(date +%Y%m%d)
   pic_folder="/home/${curUser}/Pictures/bing"
   pic_location="${pic_folder}/${curDate}".jpg
-  mkdir -p "${pic_folder}"
-  wget -q "${result}" -O "${pic_location}"
-  echo "[✓] ${curDate}.jpg saved to ${pic_location}"
+  if [[ ${curUser} == "root" ]]; then
+    echo "This script is not for root!" && exit 1
+  else
+    if [[ ! -d ${pic_folder} ]]; then
+      mkdir -p "${pic_folder}"
+      echo "[✓] ${pic_folder} dont exist, Creating"
+      if [[ -d ${pic_folder} ]]; then
+        echo "[✓] ${pic_folder} create success"
+      else
+        echo "[×] ${pic_folder} can not create, exiting" && exit 1
+        echo
+      fi
+    fi
+    wget -q "${result}" -O "${pic_location}"
+    if [[ -f ${pic_location} ]]; then
+      echo "[✓] ${curDate}.jpg saved to ${pic_location}"
+    else
+      echo "[×] ${curDate}.jpg can not save to ${pic_folder}, exiting" && exit 1
+    fi
+  fi
 }
 
 wallpaper_update() {
@@ -74,6 +91,7 @@ check_crontab_installed_status() {
 }
 
 crontab_add() {
+  check_crontab_installed_status
   crontab -l | sudo tee "${curPath}/crontab.bak"
   sed -i "/${curFile} -u/d" "${curPath}/crontab.bak"
   echo -e "\n* */1 * * * /bin/bash ${curPath}/${curFile} update" >>"${curPath}/crontab.bak"
@@ -88,15 +106,24 @@ crontab_add() {
 }
 
 crontab_del() {
-  crontab -l >"${curPath}/crontab.bak"
-  sed -i "/${curFile} update/d" "${curPath}/crontab.bak"
-  crontab "${curPath}/crontab.bak"
-  rm -r "${curPath}/crontab.bak"
-  cron_config=$(crontab -l | grep "${curFile} update")
-  if [[ -n ${cron_config} ]]; then
-    echo -e "[×] crontab remove fail!" && exit 1
+  if [[ -f ${crontab_file} ]]; then
+    crontab -l >"${curPath}/crontab.bak"
+    sed -i "/${curFile} update/d" "${curPath}/crontab.bak"
+    crontab "${curPath}/crontab.bak"
+    rm -r "${curPath}/crontab.bak"
+    cron_config=$(crontab -l | grep "${curFile} update")
+    if [[ -n ${cron_config} ]]; then
+      echo -e "[×] crontab remove fail!" && exit 1
+    else
+      echo -e "[✓] crontab remove success!"
+    fi
   else
-    echo -e "[✓] crontab remove success!"
+    read -r -p "crontab not installed, would you like to install? (Y/N)" is_install_crontab
+    if [[ -z ${is_install_crontab} ]] || echo "${is_install_crontab}" | grep -qi "y"; then
+      check_crontab_installed_status
+    else
+      exit 1
+    fi
   fi
 }
 
@@ -112,17 +139,11 @@ help_document() {
 }
 
 action=$1
-if [[ "${action}" == "--update" ]]; then
+if [[ "${action}" == "--update" ]] || [[ "${action}" == "-u" ]]; then
   wallpaper_update
-elif [[ "${action}" == "-u" ]]; then
-  wallpaper_update
-elif [[ "${action}" == "--cronadd" ]]; then
+elif [[ "${action}" == "--cronadd" ]] || [[ "${action}" == "-ca" ]]; then
   crontab_add
-elif [[ "${action}" == "-ca" ]]; then
-  crontab_add
-elif [[ "${action}" == "--crondel" ]]; then
-  crontab_del
-elif [[ "${action}" == "-cd" ]]; then
+elif [[ "${action}" == "--crondel" ]] || [[ "${action}" == "-cd" ]]; then
   crontab_del
 else
   help_document
