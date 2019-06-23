@@ -24,23 +24,23 @@ download_pic() {
   pic_location="${pic_folder}/${curDate}".jpg
   if [[ ${curUser} == "root" ]]; then
     echo "This script is not for root!" && exit 1
-  else
-    if [[ ! -d ${pic_folder} ]]; then
-      mkdir -p "${pic_folder}"
-      echo "[✓] ${pic_folder} dont exist, Creating"
-      if [[ -d ${pic_folder} ]]; then
-        echo "[✓] ${pic_folder} create success"
-      else
-        echo "[×] ${pic_folder} can not create, exiting" && exit 1
-        echo
-      fi
-    fi
-    wget -q "${result}" -O "${pic_location}"
-    if [[ -f ${pic_location} ]]; then
-      echo "[✓] ${curDate}.jpg saved to ${pic_location}"
+  fi
+  # check pic save folder
+  if [[ ! -d ${pic_folder} ]]; then
+    mkdir -p "${pic_folder}"
+    echo "[✓] ${pic_folder} dont exist, Creating"
+    if [[ -d ${pic_folder} ]]; then
+      echo "[✓] ${pic_folder} create success"
     else
-      echo "[×] ${curDate}.jpg can not save to ${pic_folder}, exiting" && exit 1
+      echo "[×] ${pic_folder} can not create, exiting" && exit 1
     fi
+  fi
+  wget -q "${result}" -O "${pic_location}"
+  # check pic download success
+  if [[ -f ${pic_location} ]]; then
+    echo "[✓] ${curDate}.jpg saved to ${pic_location}"
+  else
+    echo "[×] ${curDate}.jpg can not save to ${pic_folder}, no such directory" && exit 1
   fi
 }
 
@@ -89,6 +89,12 @@ check_crontab_installed_status() {
     fi
   fi
 }
+cur_crontab_list() {
+  echo "current crontab list: "
+  echo "**********************"
+  crontab -l
+  echo "**********************"
+}
 
 crontab_add() {
   check_crontab_installed_status
@@ -102,6 +108,7 @@ crontab_add() {
     echo -e "[×] crontab add fail!" && exit 1
   else
     echo -e "[✓] crontab add success!"
+    cur_crontab_list
   fi
 }
 
@@ -116,11 +123,13 @@ crontab_del() {
       echo -e "[×] crontab remove fail!" && exit 1
     else
       echo -e "[✓] crontab remove success!"
+      cur_crontab_list
     fi
   else
     read -r -p "crontab not installed, would you like to install? (Y/N)" is_install_crontab
     if [[ -z ${is_install_crontab} ]] || echo "${is_install_crontab}" | grep -qi "y"; then
       check_crontab_installed_status
+      crontab_del
     else
       exit 1
     fi
