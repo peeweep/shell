@@ -24,16 +24,14 @@ pacman_base() {
 		cmake curl dnsutils fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git fcitx5-qt5-git \
 		flameshot gcc gdb git linux-headers lldb make mpv nano net-tools noto-fonts-cjk openssh p7zip perf \
 		python-pip python2 python2-pip shellcheck shfmt systemtap telegram-desktop tldr ttf-opensans \
-		unrar updpkgsums valgrind vim visual-studio-code-bin wget yay
+		unrar updpkgsums valgrind vim visual-studio-code-bin wget yarn yay
 	echo "[✔] Installing base utils"
 }
 
 pacman_chaotic-aur() {
 	{
-		echo "#[chaotic-aur]"
-		echo "#Server = https://lonewolf.pedrohlc.com/\$repo/x86_64"
-		echo "#Server = http://aur.03.rw/chaotic-aur/\$repo/x86_64"
-		echo "#Server = http://chaotic-aur.03.rw/\$repo/x86_64"
+		echo "[chaotic-aur]"
+		echo "Server = https://lonewolf.pedrohlc.com/\$repo/x86_64"
 	} | sudo tee -a /etc/pacman.conf
 	sudo pacman-key --keyserver keys.mozilla.org -r 3056513887B78AEB
 	sudo pacman-key --lsign-key 3056513887B78AEB
@@ -70,7 +68,8 @@ pacman_mirrorlist() {
 pacman_init() {
 	pacman_arch4edu
 	pacman_archlinuxcn
-	pacman_disastrousaur
+  # pacman_chaotic-aur
+	# pacman_disastrousaur
 	pacman_mirrorlist
 	pacman_base
 }
@@ -99,7 +98,8 @@ fcitx_init() {
 
 fcitx5_profile() {
 	sudo killall -9 fcitx5
-	wget https://fars.ee/-9Of -O ~/.config/fcitx5/profile
+  rm ~/.config/fcitx5/profile
+	wget https://git.io/fjwFh -O ~/.config/fcitx5/profile
 }
 
 fcitx5_pam_environment() {

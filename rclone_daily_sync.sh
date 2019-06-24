@@ -2,7 +2,7 @@
 
 source_name="custom your source name"
 target_name="custom your target name"
-rclone lsd ${source_name}: | tee /tmp/task_list
+rclone lsd "${source_name}": | tee /tmp/task_list
 folder_list=$(awk -F " " '{print $5}' task_list)
 
 save_bytes() {
@@ -22,7 +22,7 @@ is_skip() {
     if [[ ! ${folder} == "$1" ]]; then
         echo "skip"
     else
-        rclone sync ${source_name}:"${folder}" ${target_name}:"${folder}" --rc -P
+        rclone sync "${source_name}:${folder}" "${target_name}:${folder}" --rc -P
         save_bytes
     fi
 }
