@@ -19,12 +19,20 @@ pacman_archlinuxcn() {
 	sudo pacman -Syu archlinuxcn-keyring
 	echo "[✔]archlinuxcn-keyring installed"
 }
+
+pacman_aur() {
+	sudo yay -Syu clion-cmake clion-gdb clion-jre clion-lldb \
+		fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git \
+		fcitx5-qt5-git kernel-modules-hook systemtap visual-studio-code-bin
+	echo "[✔] Installing aur packages"
+}
+
 pacman_base() {
-	sudo pacman -Syu axel chromium clang clion clion-cmake clion-gdb clion-jre clion-lldb cloc \
-		cmake curl dnsutils fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git fcitx5-qt5-git \
-		flameshot gcc gdb git linux-headers lldb make mpv nano net-tools noto-fonts-cjk openssh p7zip perf \
-		python-pip python2 python2-pip shellcheck shfmt systemtap telegram-desktop tldr ttf-opensans \
-		unrar updpkgsums valgrind vim visual-studio-code-bin wget yarn yay
+	sudo pacman -Syu axel chromium clang clion cloc cmake curl dnsutils \
+		flameshot gcc gdb git jq linux-headers lldb make mpv nano \
+		net-tools noto-fonts-cjk openssh p7zip pacman-contrib perf \
+		python-pip python2 python2-pip shellcheck shfmt telegram-desktop \
+		tldr translate-shell ttf-opensans unrar valgrind vim wget yarn yay
 	echo "[✔] Installing base utils"
 }
 
@@ -68,10 +76,11 @@ pacman_mirrorlist() {
 pacman_init() {
 	pacman_arch4edu
 	pacman_archlinuxcn
-  # pacman_chaotic-aur
+	# pacman_chaotic-aur
 	# pacman_disastrousaur
 	pacman_mirrorlist
 	pacman_base
+	pacman_aur
 }
 
 fcitx_xprofile() {
@@ -98,7 +107,7 @@ fcitx_init() {
 
 fcitx5_profile() {
 	sudo killall -9 fcitx5
-  rm ~/.config/fcitx5/profile
+	rm ~/.config/fcitx5/profile
 	wget https://git.io/fjwFh -O ~/.config/fcitx5/profile
 }
 
