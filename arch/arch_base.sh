@@ -3,7 +3,7 @@
 pacman_arch4edu() {
 	{
 		echo "[arch4edu]"
-		echo "SigLevel = Optional TrustedOnly"
+		echo "SigLevel = Never"
 		echo "Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/\$arch"
 	} | sudo tee -a /etc/pacman.conf
 	sudo pacman-key --recv-keys 7931B6D628C8D3BA | sudo pacman-key --lsign-key 7931B6D628C8D3BA
@@ -13,32 +13,38 @@ pacman_arch4edu() {
 pacman_archlinuxcn() {
 	{
 		echo "[archlinuxcn]"
-		echo "SigLevel = Optional TrustedOnly"
+		echo "SigLevel = Never"
 		echo "Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/\$arch"
 	} | sudo tee -a /etc/pacman.conf
-	sudo pacman -Syu archlinuxcn-keyring
+	sudo pacman -Syu archlinuxcn-keyring | tee cnkeyring.log
+	if grep -q "could not be locally signed." cnkeyring.log; then
+		echo pacman_haveged
+		rm cnkeyring.log
+	fi
 	echo "[✔]archlinuxcn-keyring installed"
 }
 
 pacman_aur() {
-	sudo yay -Syu clion-cmake clion-gdb clion-jre clion-lldb \
+	sudo yay -Syu clion clion-cmake clion-gdb clion-jre clion-lldb \
 		fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git \
 		fcitx5-qt5-git kernel-modules-hook systemtap visual-studio-code-bin
 	echo "[✔] Installing aur packages"
 }
 
 pacman_base() {
-	sudo pacman -Syu axel chromium clang clion cloc cmake curl dnsutils \
+	sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils \
 		flameshot gcc gdb git jq linux-headers lldb make mpv nano \
-		net-tools noto-fonts-cjk openssh p7zip pacman-contrib perf \
-		python-pip python2 python2-pip shellcheck shfmt telegram-desktop \
-		tldr translate-shell ttf-opensans unrar valgrind vim wget yarn yay
+		net-tools noto-fonts-cjk npm openssh p7zip pacman-contrib \
+		perf pkgfile python-pip python2 python2-pip shellcheck shfmt \
+		telegram-desktop tldr translate-shell ttf-opensans unrar \
+		valgrind vim wget yarn yay
 	echo "[✔] Installing base utils"
 }
 
 pacman_chaotic-aur() {
 	{
 		echo "[chaotic-aur]"
+		echo "SigLevel = Never"
 		echo "Server = https://lonewolf.pedrohlc.com/\$repo/x86_64"
 	} | sudo tee -a /etc/pacman.conf
 	sudo pacman-key --keyserver keys.mozilla.org -r 3056513887B78AEB
@@ -49,7 +55,7 @@ pacman_chaotic-aur() {
 pacman_disastrousaur() {
 	{
 		echo "[disastrousaur]"
-		echo "SigLevel = Optional TrustedOnly"
+		echo "SigLevel = Never"
 		echo "Server = https://mirror.repohost.de/\$repo/\$arch"
 	} | sudo tee -a /etc/pacman.conf
 	curl https://mirror.repohost.de/disastrousaur.key | sudo pacman-key -a -
@@ -74,7 +80,7 @@ pacman_mirrorlist() {
 }
 
 pacman_init() {
-	pacman_arch4edu
+	#pacman_arch4edu
 	pacman_archlinuxcn
 	# pacman_chaotic-aur
 	# pacman_disastrousaur
@@ -107,6 +113,7 @@ fcitx_init() {
 
 fcitx5_profile() {
 	sudo killall -9 fcitx5
+	mkdir -p ~/.config/fcitx5
 	rm ~/.config/fcitx5/profile
 	wget https://git.io/fjwFh -O ~/.config/fcitx5/profile
 }
@@ -116,7 +123,7 @@ fcitx5_pam_environment() {
 		echo "GTK_IM_MODULE=fcitx5"
 		echo "QT_IM_MODULE=fcitx5"
 		echo "XMODIFIERS=\"@im=fcitx\""
-	} | tee -a ~/.pam_environment
+	} | tee ~/.pam_environment
 	echo "[✔] Add fcitx5 config to pam_environment"
 }
 fcitx5_init() {
