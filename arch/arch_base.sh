@@ -18,7 +18,10 @@ pacman_archlinuxcn() {
 	} | sudo tee -a /etc/pacman.conf
 	sudo pacman -Syu archlinuxcn-keyring | tee cnkeyring.log
 	if grep -q "could not be locally signed." cnkeyring.log; then
-		echo pacman_haveged
+		pacman_haveged
+		rm cnkeyring.log
+	else
+		echo "no error"
 		rm cnkeyring.log
 	fi
 	echo "[✔]archlinuxcn-keyring installed"
