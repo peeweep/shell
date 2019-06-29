@@ -28,9 +28,9 @@ pacman_archlinuxcn() {
 }
 
 pacman_aur() {
-	sudo yay -Syu clion clion-cmake clion-gdb clion-jre clion-lldb \
-		fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git \
-		fcitx5-qt5-git kernel-modules-hook systemtap visual-studio-code-bin
+	sudo pacman -Syu clion clion-cmake clion-gdb clion-jre clion-lldb \
+		fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git fcitx5-qt5-git \
+		kernel-modules-hook nerd-fonts-complete systemtap visual-studio-code-bin
 	echo "[✔] Installing aur packages"
 }
 
