@@ -121,7 +121,7 @@ fcitx5_profile() {
 	wget https://git.io/fjwFh -O ~/.config/fcitx5/profile
 }
 
-fcitx5_pam_environment() {
+fcitx5_wayland() {
 	{
 		echo "GTK_IM_MODULE=fcitx5"
 		echo "QT_IM_MODULE=fcitx5"
@@ -129,9 +129,20 @@ fcitx5_pam_environment() {
 	} | tee ~/.pam_environment
 	echo "[✔] Add fcitx5 config to pam_environment"
 }
+
+fcitx5_x11() {
+	{
+		echo "export GTK_IM_MODULE=fcitx5"
+		echo "export XMODIFIERS=@im=fcitx5"
+		echo "export QT_IM_MODULE=fcitx5"
+		echo "fcitx5 &"
+	} | tee -a ~/.xprofile
+	echo "[✔] Add fcitx5 config to xprofile"
+}
+
 fcitx5_init() {
 	fcitx5_profile
-	fcitx5_pam_environment
+	fcitx5_x11
 }
 pacman_init
 #fcitx_init
