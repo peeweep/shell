@@ -16,9 +16,10 @@ change_omz() {
 
 change_zshrc() {
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-    before='ZSH_THEME="robbyrussell"'
-    after='alias farsee="curl -F \"c=@-\" \"http://fars.ee/\""
-# ZSH_THEME="robbyrussell"
+    if grep "ZSH_THEME=\"robbyrussell\"" ~/.zshrc; then
+        sed -i "s/ZSH_THEME=\"robbyrussell\"//" ~/.zshrc
+        mkdir -p ~/.zsh
+        echo 'alias farsee="curl -F \"c=@-\" \"http://fars.ee/\""
 ZSH_THEME="powerlevel9k/powerlevel9k"
 # Left
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
@@ -28,8 +29,11 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time
 POWERLEVEL9K_MODE="nerdfont-complete"
 source /usr/share/doc/pkgfile/command-not-found.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-'
-    sed -i "s/${before}/${after}/g" ~/.zshrc
+' | tee ~/.zsh/powerlevel9k.zsh
+        sed -i '1isource ~/.zsh/powerlevel9k.zsh' ~/.zshrc
+    else
+        echo "not found"
+    fi
 }
 
 omz_init() {
