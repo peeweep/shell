@@ -1,15 +1,5 @@
 #!/usr/bin/bash
 
-pacman_arch4edu() {
-	{
-		echo "[arch4edu]"
-		echo "SigLevel = Never"
-		echo "Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/\$arch"
-	} | sudo tee -a /etc/pacman.conf
-	sudo pacman-key --recv-keys 7931B6D628C8D3BA | sudo pacman-key --lsign-key 7931B6D628C8D3BA
-	echo "[✔]arch4edu installed"
-}
-
 pacman_archlinuxcn() {
 	{
 		echo "[archlinuxcn]"
@@ -43,27 +33,6 @@ pacman_base() {
 		telegram-desktop tldr translate-shell ttf-opensans unrar uptimed \
 		valgrind vim wget yarn yay
 	echo "[✔] Installing base utils"
-}
-
-pacman_chaotic-aur() {
-	{
-		echo "[chaotic-aur]"
-		echo "SigLevel = Never"
-		echo "Server = https://lonewolf.pedrohlc.com/\$repo/x86_64"
-	} | sudo tee -a /etc/pacman.conf
-	sudo pacman-key --keyserver keys.mozilla.org -r 3056513887B78AEB
-	sudo pacman-key --lsign-key 3056513887B78AEB
-	echo "[✔]chaotic-aur installed"
-}
-
-pacman_disastrousaur() {
-	{
-		echo "[disastrousaur]"
-		echo "SigLevel = Never"
-		echo "Server = https://mirror.repohost.de/\$repo/\$arch"
-	} | sudo tee -a /etc/pacman.conf
-	curl https://mirror.repohost.de/disastrousaur.key | sudo pacman-key -a -
-	echo "[✔]disastrousaur installed"
 }
 
 pacman_haveged() {
