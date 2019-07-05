@@ -53,35 +53,10 @@ pacman_mirrorlist() {
 }
 
 pacman_init() {
-	#pacman_arch4edu
 	pacman_archlinuxcn
-	# pacman_chaotic-aur
-	# pacman_disastrousaur
 	pacman_mirrorlist
 	pacman_base
 	pacman_aur
-}
-
-fcitx_xprofile() {
-	{
-		echo "GTK_IM_MODULE=fcitx"
-		echo "QT_IM_MODULE=fcitx"
-		echo "XMODIFIERS=\"@im=fcitx\""
-	} | tee -a ~/.xprofile
-	echo "[✔] Add fcitx config to xprofile"
-}
-
-fcitx_telegram() {
-	before='Exec=telegram-desktop -- %u'
-	after='Exec=env QT_IM_MODULE=fcitx telegram-desktop -- %u'
-	file='/usr/share/applications/telegramdesktop.desktop'
-	sudo sed -i "s/${before}/${after}/g" ${file}
-	echo "[✔] Add fcitx config to telegramdesktop.desktop"
-}
-
-fcitx_init() {
-	fcitx_xprofile
-	fcitx_telegram
 }
 
 fcitx5_profile() {
@@ -190,6 +165,5 @@ desktop_session() {
 }
 
 pacman_init
-#fcitx_init
 fcitx5_init
 desktop_session
