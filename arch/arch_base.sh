@@ -100,9 +100,9 @@ change_zshrc() {
 	if grep "ZSH_THEME=\"robbyrussell\"" ~/.zshrc; then
 		sed -i "s/ZSH_THEME=\"robbyrussell\"//" ~/.zshrc
 		mkdir -p ~/.zsh
-		cp conf/powerlevel9k.zsh ~/.zsh/powerlevel9k.zsh
+		cp conf/zsh/powerlevel9k.zsh ~/.zsh/powerlevel9k.zsh
 		sed -i '1isource ~/.zsh/powerlevel9k.zsh' ~/.zshrc
-		cp conf/custom.zsh ~/.zsh/custom.zsh
+		cp conf/zsh/custom.zsh ~/.zsh/custom.zsh
 		sed -i '1isource ~/.zsh/custom.zsh' ~/.zshrc
 	else
 		echo "not found"
