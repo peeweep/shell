@@ -24,24 +24,29 @@ homebrew_omz_install() {
     brew install zsh zsh-autosuggestions
     brew cleanup
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --unattended
-    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 }
 
 homebrew_omz_setup() {
-    before='ZSH_THEME="robbyrussell"'
-    after='alias farsee="curl -F \"c=@-\" \"http://fars.ee/\""
-# ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel9k/powerlevel9k"
+    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+    if grep "ZSH_THEME=\"robbyrussell\"" ~/.zshrc; then
+        sed -i "s/ZSH_THEME=\"robbyrussell\"//" ~/.zshrc
+        mkdir -p ~/.zsh
+        echo 'ZSH_THEME="powerlevel9k/powerlevel9k"
 # Left
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
 # Right
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time)
 # for nerd-font
 POWERLEVEL9K_MODE="nerdfont-complete"
-source  /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-'
-    sed -i "s/$before/$after/g" ~/.zshrc
+source /usr/share/doc/pkgfile/command-not-found.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+' | tee ~/.zsh/powerlevel9k.zsh
+        sed -i '1isource ~/.zsh/powerlevel9k.zsh' ~/.zshrc
+        sed -i '1ialias farsee="curl -F \"c=@-\" \"http://fars.ee/\""' ~/.zshrc
+        sed -i "1iexport GPG_TTY=$(tty)" ~/.zshrc
+    else
+        echo "not found"
+    fi
 }
 
 homebrew_omz() {
