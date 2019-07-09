@@ -100,19 +100,10 @@ change_zshrc() {
 	if grep "ZSH_THEME=\"robbyrussell\"" ~/.zshrc; then
 		sed -i "s/ZSH_THEME=\"robbyrussell\"//" ~/.zshrc
 		mkdir -p ~/.zsh
-		echo 'ZSH_THEME="powerlevel9k/powerlevel9k"
-# Left
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
-# Right
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time)
-# for nerd-font
-POWERLEVEL9K_MODE="nerdfont-complete"
-source /usr/share/doc/pkgfile/command-not-found.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-' | tee ~/.zsh/powerlevel9k.zsh
+		cp conf/powerlevel9k.zsh ~/.zsh/powerlevel9k.zsh
 		sed -i '1isource ~/.zsh/powerlevel9k.zsh' ~/.zshrc
-		sed -i '1ialias farsee="curl -F \"c=@-\" \"http://fars.ee/\""' ~/.zshrc
-		sed -i "1iexport GPG_TTY=$(tty)" ~/.zshrc
+		cp conf/custom.zsh ~/.zsh/custom.zsh
+		sed -i '1isource ~/.zsh/custom.zsh' ~/.zshrc
 	else
 		echo "not found"
 	fi
