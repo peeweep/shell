@@ -2,8 +2,8 @@
 
 homebrew_install() {
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew fetch --retry axel clang-format curl gcc git gnupg gsed p7zip shellcheck shfmt wget
-    brew install axel clang-format curl gcc git gnupg gsed p7zip shellcheck shfmt wget
+    brew fetch --retry axel clang-format curl gcc git gnupg gnu-sed p7zip shellcheck shfmt wget
+    brew install axel clang-format curl gcc git gnupg gnu-sed p7zip shellcheck shfmt wget
     brew cask install google-chrome iina iterm2 visual-studio-Code telegram
 }
 
@@ -21,6 +21,7 @@ I recommand [Sauce Code Pro Nerd Font Complete]"
 }
 
 homebrew_omz_install() {
+    brew fetch --retry zsh zsh-autosuggestions
     brew install zsh zsh-autosuggestions
     brew cleanup
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -35,6 +36,8 @@ homebrew_omz_setup() {
         gsed -i '1isource ~/.zsh/powerlevel9k.zsh' ~/.zshrc
         cp conf/zsh/custom.zsh ~/.zsh/custom.zsh
         gsed -i '1isource ~/.zsh/custom.zsh' ~/.zshrc
+        cp conf/zsh/export_path.zsh ~/.zsh/export_path.zsh
+        gsed -i '1isource ~/.zsh/export_path.zsh' ~/.zshrc
     else
         echo "not found"
     fi
