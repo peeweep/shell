@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+source_str = input('input: ')
+old = ' '
+new = '.'
+print('replace \'' + old+'\' to \'' + new + '\':')
+print(source_str.replace(old, new))
