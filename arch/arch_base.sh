@@ -91,7 +91,7 @@ fcitx5_init() {
 }
 
 change_omz() {
-	mkdir -p /usr/share/fonts/OTF/
+	sudo mkdir -p /usr/share/fonts/OTF/
 	sudo pacman -S nerd-fonts-complete zsh zsh-autosuggestions
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
