@@ -87,7 +87,11 @@ fcitx5_x11() {
 
 fcitx5_init() {
 	fcitx5_profile
-	fcitx5_x11
+	if [ "${XDG_SESSION_TYPE}" == 'x11' ]; then
+		fcitx5_x11
+	else
+		fcitx5_wayland
+	fi
 }
 
 change_omz() {
