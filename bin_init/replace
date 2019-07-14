@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-result = input('input: ')
 
 
 def replace_kerwords(source, keyword, keyword_replace):
@@ -9,10 +8,10 @@ def replace_kerwords(source, keyword, keyword_replace):
     return source
 
 
-result = replace_kerwords(result, ' ', '.')
-result = replace_kerwords(result, ':', '.')
-result = replace_kerwords(result, '：', '.')
-result = replace_kerwords(result, '-', '.')
+source = input('input: ')
+keywords = " `!@#$%^&*()_+-=\|{}:\"<>?;',/"
+for i in keywords:
+    source = replace_kerwords(source, i, '.')
+    source = replace_kerwords(source, '..', '.')
 
-result = replace_kerwords(result, '..', '.')
-print(result)
+print(source)

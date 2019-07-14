@@ -11,7 +11,7 @@ func "${catbox}" "catbox"
 vimcn="https://img.vim-cn.com/4b/d623a900d9e3c1972d0ecd91e5e922c3336030.bat"
 func "${vimcn}" "vimcn"
 
-replace="http://fars.ee/CA1-"
+replace="http://fars.ee/CGkb"
 func "${replace}" "replace"
 
 os=$(uname)
