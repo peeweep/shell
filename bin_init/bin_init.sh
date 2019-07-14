@@ -14,6 +14,12 @@ func "${vimcn}" "vimcn"
 replace="http://fars.ee/K2_j"
 func "${replace}" "replace"
 
+gdrive_err() {
+  echo "your $1 is $2, Not $3"
+  echo "Plese download your $1 and move it to /usr/bin"
+  echo "${gdrive_all}"
+  exit 1
+}
 os=$(uname)
 platform=$(uname -m)
 gdrive_all="https://drive.google.com/drive/folders/12GSQhLLdKDdKzq_a-7WOrip5HnFmm1v9"
@@ -29,17 +35,11 @@ x86_64)
     func "${gdrive_Darwin_x86_64}" "gdrive"
     ;;
   *)
-    echo "your os is ${os}, Not Linux or MacOS"
-    echo "Plese download your platform and move it to /usr/bin"
-    echo "${gdrive_all}"
-    exit 1
+    gdrive_err os ${os} "linux or macos"
     ;;
   esac
   ;;
 *)
-  echo "your platform is ${platform}, Not x86_64"
-  echo "Plese download your platform and move it to /usr/bin"
-  echo "${gdrive_all}"
-  exit 1
+  gdrive_err platform ${platform} "x86_64"
   ;;
 esac
