@@ -14,5 +14,5 @@ func "${gdrive}" "gdrive"
 vimcn="https://img.vim-cn.com/4b/d623a900d9e3c1972d0ecd91e5e922c3336030.bat"
 func "${vimcn}" "vimcn"
 
-replace="https://img.vim-cn.com/33/74833642ca5152715e06979752871e1a988ac4.py"
-func "${replace}"  "replace"
+replace="https://img.vim-cn.com/01/def4ad0304a669b1d60c4c7f126bd32262233f.py"
+func "${replace}" "replace"

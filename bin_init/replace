@@ -1,6 +1,12 @@
 #!/usr/bin/python3
-source_str = input('input: ')
-old = ' '
-new = '.'
-print('replace \'' + old+'\' to \'' + new + '\':')
-print(source_str.replace(old, new))
+result = input('input: ')
+if ' ' in result:
+  for i in result:
+    result = result.replace(' ', '.')
+if ':' in result:
+  for i in result:
+    result = result.replace(':', '.')
+if '..' in result:
+  for i in result:
+    result = result.replace('..', '.')
+print(result)
