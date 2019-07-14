@@ -1,12 +1,18 @@
 #!/usr/bin/python3
 result = input('input: ')
-if ' ' in result:
-  for i in result:
-    result = result.replace(' ', '.')
-if ':' in result:
-  for i in result:
-    result = result.replace(':', '.')
-if '..' in result:
-  for i in result:
-    result = result.replace('..', '.')
+
+
+def replace_kerwords(source, keyword, keyword_replace):
+    if keyword in source:
+        for i in source:
+            source = source.replace(keyword, keyword_replace)
+    return source
+
+
+result = replace_kerwords(result, ' ', '.')
+result = replace_kerwords(result, ':', '.')
+result = replace_kerwords(result, '：', '.')
+result = replace_kerwords(result, '-', '.')
+
+result = replace_kerwords(result, '..', '.')
 print(result)
