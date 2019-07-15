@@ -9,7 +9,7 @@ def replace_keywords(source, keyword, keyword_replace):
 
 
 source = input('input: ')
-keywords = " `!@#$%^&*()_+-=\|{}:\"<>?;',/"
+keywords = " `!@#$%^&*()_+-－={}:\"<>?;',～！￥…×（）—\\|：“《》？，。/；‘·「」、"
 for i in keywords:
     source = replace_keywords(source, i, '.')
     source = replace_keywords(source, '..', '.')
