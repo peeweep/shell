@@ -21,17 +21,17 @@ pacman_aur() {
 	yay -Syu clion clion-cmake clion-gdb clion-jre clion-lldb \
 		fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git \
 		fcitx5-qt5-git kernel-modules-hook nerd-fonts-complete \
-		systemtap visual-studio-code-bin
+		systemtap typora visual-studio-code-bin
 	echo "[✔] Installing aur packages"
 }
 
 pacman_base() {
 	sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils \
 		flameshot gcc gdb git jq linux-headers lldb make mpv nano \
-		net-tools noto-fonts-cjk npm openssh p7zip pacman-contrib \
-		perf pkgfile python-pip python2 python2-pip shellcheck shfmt \
-		telegram-desktop tldr translate-shell ttf-opensans unrar uptimed \
-		valgrind vim wget yarn yay
+		net-tools noto-fonts-cjk noto-fonts-emoji npm openssh p7zip \
+		pacman-contrib perf pkgfile python-pip python2 python2-pip \
+		shellcheck shfmt telegram-desktop tldr translate-shell \
+		ttf-opensans unrar uptimed valgrind vim wget yarn yay
 	echo "[✔] Installing base utils"
 }
 
