@@ -169,3 +169,4 @@ desktop_session() {
 pacman_init
 fcitx5_init
 desktop_session
+cp conf/clang-format ~/.clang-format
