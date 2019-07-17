@@ -27,7 +27,7 @@ pacman_aur() {
 
 pacman_base() {
 	sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils \
-		flameshot gcc gdb git jq linux-headers lldb make mpv nano \
+		flameshot gcc gdb git htop jq linux-headers lldb make mpv nano \
 		net-tools noto-fonts-cjk noto-fonts-emoji npm openssh p7zip \
 		pacman-contrib perf pkgfile python-pip python2 python2-pip \
 		shellcheck shfmt telegram-desktop tldr translate-shell \
@@ -87,11 +87,16 @@ fcitx5_x11() {
 
 fcitx5_init() {
 	fcitx5_profile
-	if [ "${XDG_SESSION_TYPE}" == 'x11' ]; then
+	case "${XDG_SESSION_TYPE}" in
+	x11)
+		fcitx5_profile
 		fcitx5_x11
-	else
+		;;
+	wayland)
+		fcitx5_profile
 		fcitx5_wayland
-	fi
+		;;
+	esac
 }
 
 change_omz() {
@@ -149,13 +154,14 @@ I recommand [Breeze]."
 }
 
 desktop_session() {
-	echo "$GDMSESSION" >>/tmp/GDMSESSION.txt
-	if grep "plasma" GDMSESSION.txt; then
+	case "${GDMSESSION}" in
+	plasma)
 		konsole_scheme
-	elif grep "xfce" GDMSESSION.txt; then
+		;;
+	xfce)
 		xfceterminal_scheme
-	fi
-	rm /tmp/GDMSESSION.txt
+		;;
+	esac
 	omz_init
 	spacevim
 }
