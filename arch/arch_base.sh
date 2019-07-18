@@ -27,8 +27,9 @@ pacman_aur() {
 
 pacman_base() {
 	sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils \
-		flameshot gcc gdb git htop jq linux-headers lldb make mpv nano \
-		net-tools noto-fonts-cjk noto-fonts-emoji npm openssh p7zip \
+		firefox flameshot gcc gdb git htop jq linux-headers lldb \
+		make mpv nano neofetch net-tools noto-fonts noto-fonts-cjk \
+		noto-fonts-emoji noto-fonts-extra npm openssh p7zip \
 		pacman-contrib perf pkgfile python-pip python2 python2-pip \
 		shellcheck shfmt telegram-desktop tldr translate-shell \
 		ttf-opensans unrar uptimed valgrind vim wget yarn yay
@@ -154,11 +155,12 @@ I recommand [Breeze]."
 }
 
 desktop_session() {
-	case "${GDMSESSION}" in
-	plasma)
+	case "${XDG_SESSION_DESKTOP}" in
+	KDE)
 		konsole_scheme
 		;;
-	xfce)
+	XFCE)
+		sound_panel
 		xfceterminal_scheme
 		;;
 	esac
