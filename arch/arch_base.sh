@@ -17,8 +17,18 @@ pacman_archlinuxcn() {
   echo "[✔]archlinuxcn-keyring installed"
 }
 
+pacman_fermiarcs() {
+  {
+    echo "[fermiarcs]"
+    echo "SigLevel = Never"
+    echo "Server = https://pkg.fermiarcs.com/archlinux/\$arch"
+  } | sudo tee -a /etc/pacman.conf
+  curl https://pkg.fermiarcs.com/archlinux/GPG.key | sudo pacman-key -a -
+  echo "[✔]fermiarcs repo installed"
+}
+
 pacman_aur() {
-  yay -Syu clion clion-cmake clion-gdb clion-jre clion-lldb \
+  yay -Syu ao clion clion-cmake clion-gdb clion-jre clion-lldb \
     fcitx5-chinese-addons-git fcitx5-git fcitx5-gtk-git \
     fcitx5-qt5-git kernel-modules-hook nerd-fonts-complete \
     systemtap typora visual-studio-code-bin
@@ -27,12 +37,12 @@ pacman_aur() {
 
 pacman_base() {
   sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils \
-    firefox flameshot gcc gdb git htop jq linux-headers lldb \
-    make mpv nano neofetch net-tools noto-fonts noto-fonts-cjk \
-    noto-fonts-emoji noto-fonts-extra npm openssh p7zip \
-    pacman-contrib perf pkgfile python-pip python2 python2-pip \
-    shellcheck shfmt telegram-desktop tldr translate-shell \
-    ttf-opensans unrar uptimed valgrind vim wget yarn yay
+    firefox flameshot gcc gdb git htop jq linux-headers lldb make \
+    mpv nano ncdu neofetch net-tools noto-fonts noto-fonts-cjk \
+    noto-fonts-emoji noto-fonts-extra npm openssh p7zip pacman-contrib \
+    perf pkgfile pkgstat python-pip python2 python2-pip shellcheck \
+    shfmt telegram-desktop tldr translate-shell tree ttf-opensans unrar \
+    uptimed valgrind vim wget yarn yay
   echo "[✔] Installing base utils"
 }
 
@@ -55,6 +65,7 @@ pacman_mirrorlist() {
 
 pacman_init() {
   pacman_archlinuxcn
+  pacman_fermiarcs
   pacman_mirrorlist
   pacman_base
   pacman_aur
