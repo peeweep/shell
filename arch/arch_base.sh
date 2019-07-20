@@ -36,13 +36,13 @@ pacman_aur() {
 }
 
 pacman_base() {
-  sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils \
-    firefox flameshot gcc gdb git htop jq linux-headers lldb make \
-    mpv nano ncdu neofetch net-tools noto-fonts noto-fonts-cjk \
-    noto-fonts-emoji noto-fonts-extra npm openssh p7zip pacman-contrib \
-    perf pkgfile pkgstat python-pip python2 python2-pip shellcheck \
-    shfmt telegram-desktop tldr translate-shell tree ttf-opensans unrar \
-    uptimed valgrind vim wget yarn yay
+  sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils firefox \
+    flameshot gcc gdb git htop jq linux-headers lldb make mpv nano ncdu \
+    neofetch net-tools nload noto-fonts noto-fonts-cjk noto-fonts-emoji \
+    noto-fonts-extra npm openssh p7zip pacman-contrib perf pkgfile pkgstat \
+    python-pip python2 python2-pip screen shellcheck shfmt telegram-desktop \
+    tldr translate-shell tree ttf-opensans unrar uptimed valgrind vim wget \
+    yarn yay
   echo "[✔] Installing base utils"
 }
 
@@ -165,6 +165,25 @@ Konsole -> Settings -> Edit Current Profile -> Appearance -> select color templa
 I recommand [Breeze]."
 }
 
+kernel_lts() {
+  case $(yay -Q nvidia | awk '{print $1}') in
+  nvidia)
+    sudo pacman -Rs nvidia
+    sudo pacman -S linux-lts linux-lts-headers nvidia-lts
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    ;;
+  *)
+    case $(yay -Q linux | awk '{print $1}') in
+    linux)
+      sudo pacman -Rs linux
+      sudo pacman -S linux-lts linux-lts-headers nvidia-lts
+      sudo grub-mkconfig -o /boot/grub/grub.cfg
+      ;;
+    esac
+    ;;
+  esac
+}
+
 desktop_session() {
   case "${XDG_SESSION_DESKTOP}" in
   KDE)
@@ -183,3 +202,4 @@ pacman_init
 fcitx5_init
 desktop_session
 cp conf/clang-format ~/.clang-format
+kernel_lts
