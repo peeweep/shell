@@ -21,9 +21,10 @@ pacman_fermiarcs() {
   {
     echo "[fermiarcs]"
     echo "SigLevel = Never"
-    echo "Server = https://pkg.fermiarcs.com/archlinux/\$arch"
+    echo "Server = https://pkg.fermiarcs.com:1443/archlinux/\$arch"
   } | sudo tee -a /etc/pacman.conf
-  curl https://pkg.fermiarcs.com/archlinux/GPG.key | sudo pacman-key -a -
+  curl https://pkg.fermiarcs.com:1443/archlinux/GPG.key | sudo pacman-key -a -
+  sudo pacman-key --edit-key A4A9C04411BE1F71
   echo "[✔]fermiarcs repo installed"
 }
 
