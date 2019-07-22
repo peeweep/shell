@@ -39,7 +39,7 @@ pacman_base() {
   sudo pacman -Syu axel chromium clang cloc cmake curl dnsutils firefox \
     flameshot gcc gdb git htop jq linux-headers lldb make mpv nano ncdu \
     neofetch net-tools nload noto-fonts noto-fonts-cjk noto-fonts-emoji \
-    noto-fonts-extra npm openssh p7zip pacman-contrib perf pkgfile pkgstat \
+    noto-fonts-extra npm openssh p7zip pacman-contrib perf pkgfile pkgstats \
     python-pip python2 python2-pip screen shellcheck shfmt telegram-desktop \
     tldr translate-shell tree ttf-opensans unrar uptimed valgrind vim wget \
     yarn yay
