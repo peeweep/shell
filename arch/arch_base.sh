@@ -203,11 +203,11 @@ gpg_server() {
     if grep "keyserver" -q "${gpg_conf}"; then
       grep "keyserver" "${gpg_conf}"
     else
-      ehco "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
+      echo "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
     fi
   else
     mkdir -p "$HOME/.gnupg"
-    ehco "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
+    echo "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
   fi
 }
 
