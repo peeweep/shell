@@ -56,7 +56,27 @@ spacevim() {
   vim
 }
 
+gpg_server() {
+  gpg_conf="$HOME/.gnupg/gpg.conf"
+  if [ -f "${gpg_conf}" ]; then
+    if grep "keyserver" -q "${gpg_conf}"; then
+      grep "keyserver" "${gpg_conf}"
+    else
+      ehco "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
+    fi
+  else
+    mkdir -p "$HOME/.gnupg"
+    ehco "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
+  fi
+}
+
+dotfiles() {
+  cp conf/clang-format ~/.clang-format
+  gpg_server
+}
+
 homebrew_install
 iterm_scheme
 homebrew_omz
 spacevim
+dotfiles
