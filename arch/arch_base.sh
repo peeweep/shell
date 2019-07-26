@@ -199,8 +199,15 @@ desktop_session() {
   spacevim
 }
 
+dotfiles() {
+  cp conf/clang-format ~/.clang-format
+
+  mkdir -p ~/.gnupg
+  cp conf/gpg.conf ~/.gnupg/gpg.conf
+}
+
 pacman_init
 fcitx5_init
 desktop_session
-cp conf/clang-format ~/.clang-format
+dotfiles
 kernel_lts
