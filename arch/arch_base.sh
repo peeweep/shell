@@ -23,8 +23,8 @@ pacman_fermiarcs() {
     echo "SigLevel = Never"
     echo "Server = https://pkg.fermiarcs.com:1443/archlinux/\$arch"
   } | sudo tee -a /etc/pacman.conf
-  curl https://pkg.fermiarcs.com:1443/archlinux/GPG.key | sudo pacman-key -a -
-  sudo pacman-key --edit-key A4A9C04411BE1F71
+  sudo pacman-key --keyserver keyserver.ubuntu.com --recv-keys A4A9C04411BE1F71
+  sudo pacman-key --lsign-key A4A9C04411BE1F71
   echo "[✔]fermiarcs repo installed"
 }
 
@@ -203,11 +203,11 @@ gpg_server() {
     if grep "keyserver" -q "${gpg_conf}"; then
       grep "keyserver" "${gpg_conf}"
     else
-      echo "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
+      echo "keyserver hkps://keyserver.ubuntu.com" | tee -a "${gpg_conf}"
     fi
   else
     mkdir -p "$HOME/.gnupg"
-    echo "keyserver pgp.mit.edu" | tee -a "${gpg_conf}"
+    echo "keyserver hkps://keyserver.ubuntu.com" | tee -a "${gpg_conf}"
   fi
 }
 
