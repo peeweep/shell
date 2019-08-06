@@ -21,7 +21,7 @@ pacman_chaotic() {
   {
     echo "[chaotic-aur]"
     echo "SigLevel = Never"
-    echo "Server = https://lonewolf.pedrohlc.com/\$repo/x86_64"
+    echo "Server = http://lonewolf-builder.duckdns.org/\$repo/x86_64"
   } | sudo tee -a /etc/pacman.conf
   sudo pacman-key --keyserver gpg.mozilla.org -r 3056513887B78AEB
   sudo pacman-key --lsign-key 3056513887B78AEB
