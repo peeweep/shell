@@ -17,31 +17,43 @@ pacman_archlinuxcn() {
   echo "[✔]archlinuxcn-keyring installed"
 }
 
+pacman_chaotic() {
+  {
+    echo "[chaotic-aur]"
+    echo "SigLevel = Never"
+    echo "Server = https://lonewolf.pedrohlc.com/\$repo/x86_64"
+  } | sudo tee -a /etc/pacman.conf
+  sudo pacman-key --keyserver gpg.mozilla.org -r 3056513887B78AEB
+  sudo pacman-key --lsign-key 3056513887B78AEB
+  echo "[✔]chaotic-aur installed"
+}
+
 pacman_fermiarcs() {
   {
     echo "[fermiarcs]"
     echo "SigLevel = Never"
     echo "Server = https://pkg.fermiarcs.com:1443/archlinux/\$arch"
   } | sudo tee -a /etc/pacman.conf
-  sudo pacman-key --keyserver keyserver.ubuntu.com --recv-keys A4A9C04411BE1F71
+  sudo pacman-key --keyserver gpg.mozilla.org --recv-keys A4A9C04411BE1F71
   sudo pacman-key --lsign-key A4A9C04411BE1F71
   echo "[✔]fermiarcs repo installed"
 }
 
 pacman_aur() {
-  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git \
-    kernel-modules-hook nerd-fonts-complete systemtap visual-studio-code-bin
+  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git google-chrome \
+    kernel-modules-hook nerd-fonts-complete sylpheed-beta-iconmod systemtap \
+    visual-studio-code-bin yay
   echo "[✔] Installing aur packages"
 }
 
 pacman_base() {
-  sudo pacman -Syu axel bind-tools chromium cloc cmake cppcheck evince \
-    firefox flameshot htop jdk-openjdk jq jre-openjdk jre-openjdk-headless \
-    libsodium lldb lsb-release make mpv nano ncdu neofetch net-tools nload \
-    noto-fonts-cjk noto-fonts-emoji noto-fonts-extra npm openssh p7zip \
-    pacman-contrib perf pkgfile pkgstats python-pip python2-pip rdesktop rust \
-    screen shellcheck shfmt sylpheed-beta-iconmod telegram-desktop tldr \
-    translate-shell tree ttf-opensans unrar uptimed valgrind wget yarn yay
+  sudo pacman -Syu axel bind-tools cloc cmake cppcheck evince firefox flameshot \
+    htop jdk-openjdk jq jre-openjdk jre-openjdk-headless libsodium lldb \
+    lsb-release make mpv nano ncdu neofetch net-tools nload noto-fonts-cjk \
+    noto-fonts-emoji noto-fonts-extra npm openssh p7zip pacman-contrib perf \
+    pkgfile pkgstats python-pip python2-pip rdesktop rust screen shellcheck \
+    shfmt telegram-desktop tldr translate-shell tree ttf-opensans unrar uptimed \
+    valgrind wget yarn
   echo "[✔] Installing base utils"
 }
 
@@ -203,11 +215,11 @@ gpg_server() {
     if grep "keyserver" -q "${gpg_conf}"; then
       grep "keyserver" "${gpg_conf}"
     else
-      echo "keyserver hkps://keyserver.ubuntu.com" | tee -a "${gpg_conf}"
+      echo "keyserver hkps://gpg.mozilla.org" | tee -a "${gpg_conf}"
     fi
   else
     mkdir -p "$HOME/.gnupg"
-    echo "keyserver hkps://keyserver.ubuntu.com" | tee -a "${gpg_conf}"
+    echo "keyserver hkps://gpg.mozilla.org" | tee -a "${gpg_conf}"
   fi
 }
 
