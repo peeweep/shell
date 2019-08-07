@@ -1,7 +1,7 @@
 #基于那个配置文件
 BasedOnStyle: LLVM
 #指针的*的挨着哪边
-PointerAlignment: Right
+PointerAlignment: Left
 #缩进宽度
 IndentWidth: 2
 # 连续的空行保留几行
