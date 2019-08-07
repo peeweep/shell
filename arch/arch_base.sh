@@ -21,10 +21,9 @@ pacman_chaotic() {
   {
     echo "[chaotic-aur]"
     echo "SigLevel = Never"
-    echo "Server = http://lonewolf-builder.duckdns.org/\$repo/x86_64"
+    echo "Server = http://lonewolf-builder.duckdns.org/chaotic-aur/x86_64"
+    echo "Server = http://chaotic.bangl.de/chaotic-aur/x86_64"
   } | sudo tee -a /etc/pacman.conf
-  sudo pacman-key --keyserver gpg.mozilla.org -r 3056513887B78AEB
-  sudo pacman-key --lsign-key 3056513887B78AEB
   echo "[✔]chaotic-aur installed"
 }
 
@@ -32,10 +31,8 @@ pacman_fermiarcs() {
   {
     echo "[fermiarcs]"
     echo "SigLevel = Never"
-    echo "Server = https://pkg.fermiarcs.com:1443/archlinux/\$arch"
+    echo "Server = https://pkg.fermiarcs.com:1443/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
-  sudo pacman-key --keyserver gpg.mozilla.org --recv-keys A4A9C04411BE1F71
-  sudo pacman-key --lsign-key A4A9C04411BE1F71
   echo "[✔]fermiarcs repo installed"
 }
 
@@ -76,6 +73,7 @@ pacman_mirrorlist() {
 
 pacman_init() {
   pacman_archlinuxcn
+  pacman_chaotic
   pacman_fermiarcs
   pacman_mirrorlist
   pacman_base
