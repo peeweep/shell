@@ -38,19 +38,20 @@ pacman_fermiarcs() {
 
 pacman_aur() {
   sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git google-chrome \
-    kernel-modules-hook nerd-fonts-complete sylpheed-beta-iconmod systemtap \
+    kernel-modules-hook nerd-fonts-complete sddm-sugar-dark systemtap \
     visual-studio-code-bin yay
   echo "[✔] Installing aur packages"
 }
 
 pacman_base() {
-  sudo pacman -Syu axel bind-tools cloc cmake cppcheck evince firefox flameshot \
+  sudo pacman -Syu axel bind-tools cloc cmake cppcheck evince flameshot \
     htop jdk-openjdk jq jre-openjdk jre-openjdk-headless libsodium lldb \
     lsb-release make mpv nano ncdu neofetch net-tools nload noto-fonts-cjk \
-    noto-fonts-emoji noto-fonts-extra npm openssh p7zip pacman-contrib perf \
-    pkgfile pkgstats python-pip python2-pip rdesktop rust screen shellcheck \
-    shfmt telegram-desktop tldr translate-shell tree ttf-opensans unrar uptimed \
-    valgrind wget yarn
+    noto-fonts-emoji noto-fonts-extra npm openssh p7zip pacman-contrib \
+    perf pkgfile pkgstats python-pip python2-pip rdesktop rust screen \
+    shellcheck shfmt telegram-desktop thunderbird tldr translate-shell \
+    tree ttf-opensans unrar uptimed valgrind wget yarn
+  sudo pacman -S gdb
   echo "[✔] Installing base utils"
 }
 
