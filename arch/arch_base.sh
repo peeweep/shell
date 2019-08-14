@@ -224,6 +224,7 @@ gpg_server() {
 
 dotfiles() {
   cp conf/clang-format ~/.clang-format
+  sudo cp conf/sddm.conf /etc/sddm.conf
   gpg_server
 }
 
