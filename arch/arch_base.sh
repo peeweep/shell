@@ -31,7 +31,7 @@ pacman_fermiarcs() {
   {
     echo "[fermiarcs]"
     echo "SigLevel = Never"
-    echo "Server = https://pkg.fermiarcs.com:1443/archlinux/x86_64"
+    echo "Server = https://pkg.fermiarcs.com/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
   echo "[✔]fermiarcs repo installed"
 }
@@ -39,12 +39,12 @@ pacman_fermiarcs() {
 pacman_aur() {
   sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git google-chrome \
     kernel-modules-hook nerd-fonts-complete sddm-sugar-dark systemtap \
-    visual-studio-code-bin yay
+    visual-studio-code-bin yay-git
   echo "[✔] Installing aur packages"
 }
 
 pacman_base() {
-  sudo pacman -Syu axel bind-tools cloc cmake cppcheck evince flameshot \
+  sudo pacman -Syu axel bind-tools cloc cmake cppcheck evince feh flameshot \
     htop jdk-openjdk jq jre-openjdk jre-openjdk-headless libsodium lldb \
     lsb-release make mpv nano ncdu neofetch net-tools nload noto-fonts-cjk \
     noto-fonts-emoji noto-fonts-extra npm openssh p7zip pacman-contrib \
