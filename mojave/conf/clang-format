@@ -1,7 +1,9 @@
-#基于那个配置文件
-BasedOnStyle: LLVM
-#指针的*的挨着哪边
+## Based On Style
+BasedOnStyle: Google
 PointerAlignment: Left
+<<<<<<< HEAD
+TabWidth: 2
+=======
 # 总是在template声明后换行
 AlwaysBreakTemplateDeclarations: true
 #缩进宽度
@@ -31,21 +33,25 @@ SpacesInParentheses : false
 #多行声明语句按照=对齐
 AlignConsecutiveDeclarations: true
 #连续的赋值语句以 = 为中心对齐
+>>>>>>> 7b74df845411e76d4f47d558790b698300cd7b45
 AlignConsecutiveAssignments: true
-#等号两边的空格
-SpaceBeforeAssignmentOperators: true
-# 容器类的空格 例如 OC的字典
-SpacesInContainerLiterals: true
-#缩进
-IndentWrappedFunctionNames: true
-#在block从空行开始
-KeepEmptyLinesAtTheStartOfBlocks: true
-#在构造函数初始化时按逗号断行，并以冒号对齐
-BreakConstructorInitializersBeforeComma: true
-#函数参数换行
+# int aaaa        = 12;
+# float b         = 23;
+# std::string ccc = 23;
+AlignConsecutiveDeclarations: true
+# int         aaaa = 12;
+# float       b = 23;
+# std::string ccc = 23;
+AlwaysBreakTemplateDeclarations: Yes 
+## true:
+# template <typename T>
+# T foo() {}
+## false:
+# template <typename T> T foo() {}
+## Same as Google Default:
 AllowAllParametersOfDeclarationOnNextLine: true
-#括号后添加空格
-SpaceAfterCStyleCast: true
-#tab键盘的宽度
-TabWidth: 2
+AllowShortIfStatementsOnASingleLine: false
+IndentWidth: 2
+MaxEmptyLinesToKeep: 2 
+SortIncludes: true
 UseTab: Never
