@@ -2,6 +2,8 @@
 BasedOnStyle: LLVM
 #指针的*的挨着哪边
 PointerAlignment: Left
+# 总是在template声明后换行
+AlwaysBreakTemplateDeclarations: true
 #缩进宽度
 IndentWidth: 2
 # 连续的空行保留几行
