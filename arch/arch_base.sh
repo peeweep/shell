@@ -37,9 +37,9 @@ pacman_fermiarcs() {
 }
 
 pacman_aur() {
-  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git google-chrome \
-    kernel-modules-hook nerd-fonts-complete sddm-sugar-dark systemtap \
-    visual-studio-code-bin yay-git
+  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git \
+    firefox-nightly-en-us google-chrome kernel-modules-hook \
+    nerd-fonts-complete systemtap visual-studio-code-bin yay-git
   echo "[✔] Installing aur packages"
 }
 
