@@ -37,22 +37,27 @@ pacman_fermiarcs() {
 }
 
 pacman_aur() {
-  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git \
-    firefox-nightly-en-us google-chrome kernel-modules-hook \
-    nerd-fonts-complete systemtap visual-studio-code-bin yay-git
-  echo "[✔] Installing aur packages"
+  aur_fcitx5="fcitx5-chinese-addons-git fcitx5-gtk-git"
+  aur_browser="firefox-nightly-en-us google-chrome"
+  aur_arch="kernel-modules-hook yay-git"
+  aur_fonts="nerd-fonts-complete"
+  aur_editor="visual-studio-code-bin"
+  sudo pacman -Syu "${aur_fcitx5}" "${aur_browser}" "${aur_arch}" \
+    "${aur_fonts}" "${aur_editor}"
 }
 
 pacman_base() {
-  sudo pacman -Syu axel bind-tools cloc cmake cppcheck evince feh flameshot \
-    htop jdk-openjdk jq jre-openjdk jre-openjdk-headless libsodium lldb \
-    lsb-release make mpv nano ncdu neofetch net-tools nload noto-fonts-cjk \
-    noto-fonts-emoji noto-fonts-extra npm openssh p7zip pacman-contrib \
-    perf pkgfile pkgstats python-pip python2-pip rdesktop rust screen \
-    shellcheck shfmt telegram-desktop thunderbird tldr translate-shell \
-    tree ttf-opensans unrar uptimed valgrind wget yarn
-  sudo pacman -S gdb
-  echo "[✔] Installing base utils"
+  base_net_utils="axel bind-tools net-tools wget"
+  base_level_1="p7zip unrar htop neofetch screen shellcheck "
+  base_level_2="cloc jq ncdu tree uptimed shfmt tldr"
+  base_arch="pacman-contrib pkgfile pkgstats"
+  base_gui="feh flameshot mpv rdesktop telegram-desktop thunderbird"
+  base_python_packages="autopep8 python-pylint"
+  base_build_env="cmake gdb jdk-openjdk jre-openjdk lldb"
+  base_fonts="noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-opensans"
+  suod pacman -Syu "${base_net_utils}" "${base_level_1}" "${base_level_2}" \
+    "${base_arch}" "${base_gui}" "${base_python_packages}" "${base_build_env}" \
+    "${base_fonts}"
 }
 
 pacman_haveged() {
