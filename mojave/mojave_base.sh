@@ -72,7 +72,7 @@ gpg_server() {
 
 dotfiles() {
   cp conf/clang-format ~/.clang-format
-  gpg_server
+  #gpg_server
 }
 
 homebrew_install
