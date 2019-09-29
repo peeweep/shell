@@ -38,24 +38,25 @@ pacman_fermiarcs() {
 
 pacman_aur() {
   aur_fcitx5="fcitx5-chinese-addons-git fcitx5-gtk-git"
-  aur_browser="firefox-nightly-en-us google-chrome"
+  aur_browser="brave-bin firefox-nightly-en-us google-chrome"
   aur_arch="kernel-modules-hook yay-git"
   aur_fonts="nerd-fonts-complete"
   aur_editor="visual-studio-code-bin"
+  aur_media="mpv-git youtube-dl-git"
   sudo pacman -Syu "${aur_fcitx5}" "${aur_browser}" "${aur_arch}" \
-    "${aur_fonts}" "${aur_editor}"
+    "${aur_fonts}" "${aur_editor}" "${aur_media}"
 }
 
 pacman_base() {
   base_net_utils="axel bind-tools net-tools wget"
-  base_level_1="p7zip unrar htop neofetch screen shellcheck "
-  base_level_2="cloc jq ncdu tree uptimed shfmt tldr"
+  base_level_1="p7zip unrar htop neofetch screen shellcheck"
+  base_level_2="cloc exfat-utils jq ncdu tree uptimed shfmt tldr"
   base_arch="pacman-contrib pkgfile pkgstats"
-  base_gui="feh flameshot mpv rdesktop telegram-desktop thunderbird"
+  base_gui="feh flameshot okular telegram-desktop thunderbird"
   base_python_packages="autopep8 python-pylint"
   base_build_env="cmake gdb jdk-openjdk jre-openjdk lldb"
   base_fonts="noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-opensans"
-  suod pacman -Syu "${base_net_utils}" "${base_level_1}" "${base_level_2}" \
+  sudo pacman -Syu "${base_net_utils}" "${base_level_1}" "${base_level_2}" \
     "${base_arch}" "${base_gui}" "${base_python_packages}" "${base_build_env}" \
     "${base_fonts}"
 }
