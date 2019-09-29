@@ -80,6 +80,9 @@ pacman_mirrorlist() {
 }
 
 pacman_init() {
+  mkdir -p ~/.gnupg
+  echo "keyserver hkps://gpg.mozilla.org" | tee -a ~/.gnupg/gpg.conf
+  echo "keyserver hkps://gpg.mozilla.org" | sudo tee -a /etc/pacman.d/gnupg/gpg.conf
   pacman_archlinuxcn
   pacman_chaotic
   pacman_fermiarcs
@@ -215,24 +218,8 @@ desktop_session() {
   spacevim
 }
 
-gpg_server() {
-  gpg_conf="$HOME/.gnupg/gpg.conf"
-  if [ -f "${gpg_conf}" ]; then
-    if grep "keyserver" -q "${gpg_conf}"; then
-      grep "keyserver" "${gpg_conf}"
-    else
-      echo "keyserver hkps://gpg.mozilla.org" | tee -a "${gpg_conf}"
-    fi
-  else
-    mkdir -p "$HOME/.gnupg"
-    echo "keyserver hkps://gpg.mozilla.org" | tee -a "${gpg_conf}"
-  fi
-}
-
 dotfiles() {
   cp conf/clang-format ~/.clang-format
-  sudo cp conf/sddm.conf /etc/sddm.conf
-  #gpg_server
 }
 
 pacman_init
