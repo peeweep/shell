@@ -3,7 +3,6 @@
 pacman_archlinuxcn() {
   {
     echo "[archlinuxcn]"
-    echo "SigLevel = Never"
     echo "Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/\$arch"
   } | sudo tee -a /etc/pacman.conf
   sudo pacman -Syu archlinuxcn-keyring | tee cnkeyring.log
@@ -30,9 +29,10 @@ pacman_chaotic() {
 pacman_fermiarcs() {
   {
     echo "[fermiarcs]"
-    echo "SigLevel = Never"
     echo "Server = https://pkg.fermiarcs.com/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
+  sudo pacman-key --recv-keys A4A9C04411BE1F71
+  sudo pacman-key --lsign-key A4A9C04411BE1F71
   echo "[✔]fermiarcs repo installed"
 }
 
@@ -74,7 +74,8 @@ pacman_haveged() {
 
 pacman_mirrorlist() {
   sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-  echo "Server = https://mirrors.huaweicloud.com/archlinux/\$repo/os/\$arch" | sudo tee -a /etc/pacman.d/mirrorlist
+  sudo reflector --verbose --country CHINA -l 200 -p https --sort rate --save /etc/pacman.d/mirrorlist
+  # echo "Server = https://mirrors.neusoft.edu.cn/archlinux/\$repo/os/\$arch" | sudo tee -a /etc/pacman.d/mirrorlist
 }
 
 pacman_init() {
