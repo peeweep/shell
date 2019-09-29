@@ -237,4 +237,4 @@ pacman_init
 fcitx5_init
 desktop_session
 dotfiles
-kernel_lts
+# kernel_lts
