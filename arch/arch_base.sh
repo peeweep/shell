@@ -218,9 +218,20 @@ desktop_session() {
   spacevim
 }
 
+
+
 dotfiles() {
   cp conf/clang-format ~/.clang-format
+  # Updade /etc/makepkg.conf
+  cd /etc || exit
+  sudo patch -p1 <"${script_path}"/conf/makepkg.patch
+  cd "${script_path}" || exit
 }
+
+script_path=$(
+  cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+  pwd
+)
 
 pacman_init
 fcitx5_init
