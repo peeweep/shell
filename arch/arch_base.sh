@@ -16,6 +16,15 @@ pacman_archlinuxcn() {
   echo "[✔]archlinuxcn-keyring installed"
 }
 
+pacman_blackarch() {
+  {
+    echo "#[blackarch]"
+    echo "#SigLevel = Never"
+    echo "#Server = https://mirrors.tuna.tsinghua.edu.cn/\$repo/\$repo/os/\$arch"
+  } | sudo tee -a /etc/pacman.conf
+  echo "[✔]blackarch installed"
+}
+
 pacman_chaotic() {
   {
     echo "[chaotic-aur]"
@@ -31,7 +40,7 @@ pacman_fermiarcs() {
     echo "[fermiarcs]"
     echo "Server = https://pkg.fermiarcs.com/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
-  sudo pacman-key --recv-keys A4A9C04411BE1F71
+  sudo pacman-key --keyserver hkps://gpg.mozilla.org --recv-keys A4A9C04411BE1F71
   sudo pacman-key --lsign-key A4A9C04411BE1F71
   echo "[✔]fermiarcs repo installed"
 }
@@ -84,6 +93,7 @@ pacman_init() {
   echo "keyserver hkps://gpg.mozilla.org" | tee -a ~/.gnupg/gpg.conf
   echo "keyserver hkps://gpg.mozilla.org" | sudo tee -a /etc/pacman.d/gnupg/gpg.conf
   pacman_archlinuxcn
+  pacman_blackarch
   pacman_chaotic
   pacman_fermiarcs
   pacman_mirrorlist
