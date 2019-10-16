@@ -35,14 +35,14 @@ pacman_chaotic() {
   echo "[✔]chaotic-aur installed"
 }
 
-pacman_fermiarcs() {
+pacman_peeweep() {
   {
-    echo "[fermiarcs]"
-    echo "Server = https://pkg.fermiarcs.com/archlinux/x86_64"
+    echo "[peeweep]"
+    echo "Server = https://peeweep.duckdns.org/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
   sudo pacman-key --keyserver hkps://gpg.mozilla.org --recv-keys A4A9C04411BE1F71
   sudo pacman-key --lsign-key A4A9C04411BE1F71
-  echo "[✔]fermiarcs repo installed"
+  echo "[✔]peeweep repo installed"
 }
 
 pacman_aur() {
@@ -95,7 +95,7 @@ pacman_init() {
   pacman_archlinuxcn
   pacman_blackarch
   pacman_chaotic
-  pacman_fermiarcs
+  pacman_peeweep
   pacman_mirrorlist
   pacman_base
   pacman_aur
