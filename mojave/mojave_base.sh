@@ -14,8 +14,8 @@ I recommand [Afterglow]."
 }
 
 homebrew_nerd() {
-  brew tap caskroom/fonts
-  brew cask install font-sourcecodepro-nerd-font
+  brew tap homebrew/cask-fonts
+  brew cask install font-hack-nerd-font
   echo "You can setting font in Preferences -> Profiles -> Text,
 I recommand [Sauce Code Pro Nerd Font Complete]"
 }
