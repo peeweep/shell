@@ -20,6 +20,6 @@ AlwaysBreakTemplateDeclarations:           No
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortIfStatementsOnASingleLine:       false
 IndentWidth:                               2
-MaxEmptyLinesToKeep:                       0
+MaxEmptyLinesToKeep:                       1
 SortIncludes:                              true
 UseTab:                                    Never
