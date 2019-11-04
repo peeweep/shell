@@ -1,25 +1,12 @@
-## Based On Style
-BasedOnStyle:                              Google
-PointerAlignment:                          Left
-TabWidth:                                  2
-AlignConsecutiveAssignments:               true
-# int aaaa        = 12;
-# float b         = 23;
-# std::string ccc = 23;
-AlignConsecutiveDeclarations:              true
-# int         aaaa = 12;
-# float       b = 23;
-# std::string ccc = 23;
-AlwaysBreakTemplateDeclarations:           No
-## true:
-# template <typename T>
-# T foo() {}
-## false:
-# template <typename T> T foo() {}
-## Same as Google Default:
+BasedOnStyle: Google
+PointerAlignment: Left
+TabWidth: 2
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlwaysBreakTemplateDeclarations: No
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortIfStatementsOnASingleLine:       false
-IndentWidth:                               2
-MaxEmptyLinesToKeep:                       1
-SortIncludes:                              true
-UseTab:                                    Never
+AllowShortIfStatementsOnASingleLine: false
+IndentWidth: 2
+MaxEmptyLinesToKeep: 1
+SortIncludes: true
+UseTab: Never
