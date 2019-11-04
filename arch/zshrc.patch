@@ -1,6 +1,6 @@
-diff --git a/zshrc b/zshrc
---- a/zshrc
-+++ b/zshrc
+diff --git a/.zshrc b/.zshrc
+--- a/.zshrc
++++ b/.zshrc
 @@ -3,12 +3,23 @@
  
  # Path to your oh-my-zsh installation.

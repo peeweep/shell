@@ -16,17 +16,23 @@ pacman_peeweep() {
     echo "SigLevel = Never"
     echo "Server = https://peeweep.duckdns.org/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
-  sudo pacman-key --keyserver hkps://gpg.mozilla.org --recv-keys A4A9C04411BE1F71
+  sudo pacman -Syu curl
+  curl https://peeweep.de/pubring.gpg | sudo pacman-key -a -
   sudo pacman-key --lsign-key A4A9C04411BE1F71
+  sudo pacman -Syu
   echo "[✔]peeweep repo installed"
 }
 
 pacman_aur() {
-  aur_base="fcitx5-chinese-addons-git fcitx5-gtk-git kernel-modules-hook yay-git"
-  aur_ide="visual-studio-code-bin clion clion-cmake clion-gdb clion-jre clion-lldb"
-  aur_media="mpv-git youtube-dl-git nerd-fonts-complete"
-  aur_lily="linux-lily linux-lily-headers nvidia-lily virtualbox-host-modules-lily vmware-workstation"
-  sudo pacman -Syu "${aur_base}" "${aur_ide}" "${aur_media}" "${aur_lily}"
+  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git kernel-modules-hook yay-git \
+    clion clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
+    mpv-git nerd-fonts-complete youtube-dl-git \
+    linux-lily linux-lily-headers nvidia-lily virtualbox-host-modules-lily vmware-workstation
+  sudo pacman -Rs linux nvidia linux-lts nvidia-lts
+  sudo systemctl enable pkgfile-update.timer  #pkgfile
+  sudo systemctl enable linux-modules-cleanup # kernel-modules-hook
+  sudo systemctl enable vmware-networks.service vmware-usbarbitrator.service vmware-hostd.service
+  sudo modprobe -a vmw_vmci vmmon # vmware-workstation
 }
 
 pacman_base() {
@@ -103,7 +109,7 @@ omz_init() {
   sudo ln -s /usr/share/zsh-theme-powerlevel9k /usr/share/oh-my-zsh/themes/zsh-theme-powerlevel9k
   cp /usr/share/oh-my-zsh/zshrc ~/.zshrc
   cd ~ || exit
-  patch -p1 <"${script_path}"/zsh.patch
+  patch -p1 <"${script_path}"/zshrc.patch
   cd "${script_path}" || exit
 }
 
@@ -128,7 +134,7 @@ I recommand [Calamity] / [Builtin Tango Dark]."
 }
 
 download_iTerm2_scheme() {
-  sudo wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/konsole/"$1".colorscheme /usr/share/konsole/"$1".colorscheme
+  sudo wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/konsole/"$1".colorscheme -O /usr/share/konsole/"$1".colorscheme
 }
 
 add_konsole_scheme() {
