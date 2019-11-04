@@ -3,41 +3,17 @@
 pacman_archlinuxcn() {
   {
     echo "[archlinuxcn]"
+    echo "SigLevel = Never"
     echo "Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/\$arch"
   } | sudo tee -a /etc/pacman.conf
-  sudo pacman -Syu archlinuxcn-keyring | tee cnkeyring.log
-  if grep -q "could not be locally signed." cnkeyring.log; then
-    pacman_haveged
-    rm cnkeyring.log
-  else
-    echo "no error"
-    rm cnkeyring.log
-  fi
+  sudo pacman -Syu archlinuxcn-keyring
   echo "[✔]archlinuxcn-keyring installed"
-}
-
-pacman_blackarch() {
-  {
-    echo "#[blackarch]"
-    echo "#SigLevel = Never"
-    echo "#Server = https://mirrors.tuna.tsinghua.edu.cn/\$repo/\$repo/os/\$arch"
-  } | sudo tee -a /etc/pacman.conf
-  echo "[✔]blackarch installed"
-}
-
-pacman_chaotic() {
-  {
-    echo "[chaotic-aur]"
-    echo "SigLevel = Never"
-    echo "Server = http://lonewolf-builder.duckdns.org/chaotic-aur/x86_64"
-    echo "Server = http://chaotic.bangl.de/chaotic-aur/x86_64"
-  } | sudo tee -a /etc/pacman.conf
-  echo "[✔]chaotic-aur installed"
 }
 
 pacman_peeweep() {
   {
     echo "[peeweep]"
+    echo "SigLevel = Never"
     echo "Server = https://peeweep.duckdns.org/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
   sudo pacman-key --keyserver hkps://gpg.mozilla.org --recv-keys A4A9C04411BE1F71
@@ -46,57 +22,37 @@ pacman_peeweep() {
 }
 
 pacman_aur() {
-  aur_fcitx5="fcitx5-chinese-addons-git fcitx5-gtk-git"
-  aur_browser="brave-bin firefox-nightly-en-us google-chrome"
-  aur_arch="kernel-modules-hook yay-git"
-  aur_fonts="nerd-fonts-complete"
-  aur_editor="visual-studio-code-bin"
-  aur_media="mpv-git youtube-dl-git"
-  sudo pacman -Syu "${aur_fcitx5}" "${aur_browser}" "${aur_arch}" \
-    "${aur_fonts}" "${aur_editor}" "${aur_media}"
+  aur_base="fcitx5-chinese-addons-git fcitx5-gtk-git kernel-modules-hook yay-git"
+  aur_ide="visual-studio-code-bin clion clion-cmake clion-gdb clion-jre clion-lldb"
+  aur_media="mpv-git youtube-dl-git nerd-fonts-complete"
+  aur_lily="linux-lily linux-lily-headers nvidia-lily virtualbox-host-modules-lily vmware-workstation"
+  sudo pacman -Syu "${aur_base}" "${aur_ide}" "${aur_media}" "${aur_lily}"
 }
 
 pacman_base() {
-  base_net_utils="axel bind-tools net-tools wget"
-  base_level_1="p7zip unrar htop neofetch screen shellcheck"
-  base_level_2="cloc exfat-utils jq ncdu tree uptimed shfmt tldr"
-  base_arch="pacman-contrib pkgfile pkgstats"
-  base_gui="feh flameshot okular telegram-desktop thunderbird"
-  base_python_packages="autopep8 python-pylint"
-  base_build_env="cmake gdb jdk-openjdk jre-openjdk lldb"
-  base_fonts="noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-opensans"
-  sudo pacman -Syu "${base_net_utils}" "${base_level_1}" "${base_level_2}" \
-    "${base_arch}" "${base_gui}" "${base_python_packages}" "${base_build_env}" \
-    "${base_fonts}"
+  sudo pacman -Syu autopep8 axel bind-tools chromium cloc cmake exfat-utils feh \
+    flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man ncdu neofetch net-tools \
+    noto-fonts-cjk noto-fonts-emoji noto-fonts-extra p7zip pacman-contrib pkgfile \
+    pkgstats python-pylint screen screenfetch shellcheck shfmt telegram-desktop \
+    thunderbird tldr tree ttf-opensans unrar uptimed virtualbox virtualbox-guest-iso wget
 }
 
 pacman_haveged() {
   sudo pacman -Syu haveged
   sudo systemctl start haveged
   sudo systemctl enable haveged
-  sudo rm -fr /etc/pacman.d/gnupg
-  sudo pacman-key --init
-  sudo pacman-key --populate archlinux
-  sudo pacman-key --populate archlinuxcn
-  sudo pacman -S --noconfirm archlinuxcn-keyring
-  echo "[✔] Fix pacman archlinuxcn-keyring in gnupg-2.1"
 }
 
 pacman_mirrorlist() {
   sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-  sudo reflector --verbose --country CHINA -l 200 -p https --sort rate --save /etc/pacman.d/mirrorlist
-  # echo "Server = https://mirrors.neusoft.edu.cn/archlinux/\$repo/os/\$arch" | sudo tee -a /etc/pacman.d/mirrorlist
+  sudo cp conf/mirrorlist /etc/pacman.d/mirrorlist
 }
 
 pacman_init() {
-  mkdir -p ~/.gnupg
-  echo "keyserver hkps://gpg.mozilla.org" | tee -a ~/.gnupg/gpg.conf
-  echo "keyserver hkps://gpg.mozilla.org" | sudo tee -a /etc/pacman.d/gnupg/gpg.conf
-  pacman_archlinuxcn
-  pacman_blackarch
-  pacman_chaotic
-  pacman_peeweep
+  pacman_haveged
   pacman_mirrorlist
+  pacman_archlinuxcn
+  pacman_peeweep
   pacman_base
   pacman_aur
 }
@@ -141,29 +97,14 @@ fcitx5_init() {
   esac
 }
 
-change_omz() {
-  sudo mkdir -p /usr/share/fonts/OTF/
-  sudo pacman -S nerd-fonts-complete zsh zsh-autosuggestions
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-}
-
-change_zshrc() {
-  git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-  if grep "ZSH_THEME=\"robbyrussell\"" ~/.zshrc; then
-    sed -i "s/ZSH_THEME=\"robbyrussell\"//" ~/.zshrc
-    mkdir -p ~/.zsh
-    cp conf/zsh/powerlevel9k.zsh ~/.zsh/powerlevel9k.zsh
-    sed -i '1isource ~/.zsh/powerlevel9k.zsh' ~/.zshrc
-    cp conf/zsh/custom.zsh ~/.zsh/custom.zsh
-    sed -i '1isource ~/.zsh/custom.zsh' ~/.zshrc
-  else
-    echo "not found"
-  fi
-}
-
 omz_init() {
-  change_omz
-  change_zshrc
+  sudo mkdir -p /usr/share/fonts/OTF/
+  sudo pacman -S nerd-fonts-complete zsh zsh-autosuggestions oh-my-zsh-git zsh-theme-powerlevel9k
+  sudo ln -s /usr/share/zsh-theme-powerlevel9k /usr/share/oh-my-zsh/themes/zsh-theme-powerlevel9k
+  cp /usr/share/oh-my-zsh/zshrc ~/.zshrc
+  cd ~ || exit
+  patch -p1 <"${script_path}"/zsh.patch
+  cd "${script_path}" || exit
 }
 
 spacevim() {
@@ -186,38 +127,22 @@ xfceterminal_scheme() {
 I recommand [Calamity] / [Builtin Tango Dark]."
 }
 
-konsole_scheme() {
-  git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
-  sudo cp ~/Documents/iTerm2-Color-Schemes/konsole/*.colorscheme /usr/share/konsole
-  rm -rf ~/Documents/iTerm2-Color-Schemes
-  echo "You can change Konsole Color theme at 
-Konsole -> Settings -> Edit Current Profile -> Appearance -> select color template ,
-I recommand [Breeze]."
+download_iTerm2_scheme() {
+  sudo wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/konsole/"$1".colorscheme /usr/share/konsole/"$1".colorscheme
 }
 
-kernel_lts() {
-  case $(yay -Q nvidia | awk '{print $1}') in
-  nvidia)
-    sudo pacman -Rs nvidia
-    sudo pacman -S linux-lts linux-lts-headers nvidia-lts
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
-    ;;
-  *)
-    case $(yay -Q linux | awk '{print $1}') in
-    linux)
-      sudo pacman -Rs linux
-      sudo pacman -S linux-lts linux-lts-headers nvidia-lts
-      sudo grub-mkconfig -o /boot/grub/grub.cfg
-      ;;
-    esac
-    ;;
-  esac
+add_konsole_scheme() {
+  # git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
+  # sudo cp ~/Documents/iTerm2-Color-Schemes/konsole/*.colorscheme /usr/share/konsole
+  # rm -rf ~/Documents/iTerm2-Color-Schemes
+  download_iTerm2_scheme Hivacruz
+  download_iTerm2_scheme Dracula
 }
 
 desktop_session() {
   case "${XDG_SESSION_DESKTOP}" in
   KDE)
-    konsole_scheme
+    add_konsole_scheme
     ;;
   XFCE)
     sound_panel
@@ -228,16 +153,6 @@ desktop_session() {
   spacevim
 }
 
-
-
-dotfiles() {
-  cp conf/clang-format ~/.clang-format
-  # Updade /etc/makepkg.conf
-  cd /etc || exit
-  sudo patch -p1 <"${script_path}"/conf/makepkg.patch
-  cd "${script_path}" || exit
-}
-
 script_path=$(
   cd "$(dirname "${BASH_SOURCE[0]}")" || exit
   pwd
@@ -246,5 +161,4 @@ script_path=$(
 pacman_init
 fcitx5_init
 desktop_session
-dotfiles
-# kernel_lts
+cp conf/clang-format ~/.clang-format
