@@ -23,19 +23,48 @@ pacman_peeweep() {
   echo "[✔]peeweep repo installed"
 }
 
-pacman_aur() {
-  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git kernel-modules-hook yay-git \
+pacman_unofficial_packages() {
+  # kernel-modules-hook
+  sudo pacman -Syu kernel-modules-hook
+  sudo systemctl enable linux-modules-cleanup
+  sudo systemctl start linux-modules-cleanup
+
+  # install unofficial packages
+  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git yay-git \
     clion clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
     mpv-git nerd-fonts-complete youtube-dl-git \
     linux-lily linux-lily-headers nvidia-lily virtualbox-host-modules-lily vmware-workstation
-  sudo pacman -Rs linux nvidia linux-lts nvidia-lts
-  sudo systemctl enable pkgfile-update.timer  #pkgfile
-  sudo systemctl enable linux-modules-cleanup # kernel-modules-hook
+
+  # pkgfile
+  sudo systemctl enable pkgfile-update.timer
+  sudo systemctl start pkgfile-update.timer
+  sudo pkgfile --update
+
+  # Remove old kernel and nvidia driver
+  case "$(pacman -Qq nvidia)" in
+  nvidia)
+    sudo pacman -Rs nvidia
+    sudo pacman -Rs linux
+    sudo pacman -Rs linux-headers
+    ;;
+  nvidia-lts)
+    sudo pacman -Rs nvidia-lts
+    sudo pacman -Rs linux-lts
+    sudo pacman -Rs linux-lts-headers
+    ;;
+  esac
+
+  # rebuild grub
+  sudo grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+  # vmware-workstation
   sudo systemctl enable vmware-networks.service vmware-usbarbitrator.service vmware-hostd.service
-  sudo modprobe -a vmw_vmci vmmon # vmware-workstation
+  sudo systemctl start vmware-networks.service vmware-usbarbitrator.service vmware-hostd.service
+  sudo modprobe -a vmw_vmci vmmon
 }
 
-pacman_base() {
+pacman_official_packages() {
   sudo pacman -Syu autopep8 axel bind-tools chromium cloc cmake exfat-utils feh \
     flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man ncdu neofetch net-tools \
     noto-fonts-cjk noto-fonts-emoji noto-fonts-extra p7zip pacman-contrib pkgfile \
@@ -57,10 +86,12 @@ pacman_mirrorlist() {
 pacman_init() {
   pacman_haveged
   pacman_mirrorlist
+  # add unofficial repo
   pacman_archlinuxcn
   pacman_peeweep
-  pacman_base
-  pacman_aur
+  # install packages
+  pacman_official_packages
+  pacman_unofficial_packages
 }
 
 fcitx5_profile() {
@@ -146,7 +177,7 @@ add_konsole_scheme() {
 }
 
 desktop_session() {
-  case "${XDG_SESSION_DESKTOP}" in
+  case "${XDG_CURRENT_DESKTOP}" in
   KDE)
     add_konsole_scheme
     ;;
