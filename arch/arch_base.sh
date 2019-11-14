@@ -23,17 +23,92 @@ pacman_peeweep() {
   echo "[✔]peeweep repo installed"
 }
 
+pacman_ck() {
+  {
+    echo "[repo-ck]"
+    echo "SigLevel = Never"
+    echo "Server = https://mirrors.tuna.tsinghua.edu.cn/repo-ck/\$arch"
+  } | sudo tee -a /etc/pacman.conf
+  sudo pacman-key -r 5EE46C4C && sudo pacman-key --lsign-key 5EE46C4C
+  sudo pacman -Syu
+}
+
+linux_ck() {
+  march=$(gcc -c -Q -march=native --help=target | grep march | awk '{print $2}' | head -n1)
+  case "${march}" in
+  bonnell)
+    group="ck-atom"
+    ;;
+  silvermont)
+    group="ck-silvermont"
+    ;;
+  core2)
+    group="ck-core2"
+    ;;
+  nehalem)
+    group="ck-nehalem"
+    ;;
+  sandybridge)
+    group="ck-sandybridge"
+    ;;
+  ivybridge)
+    group="ck-ivybridge"
+    ;;
+  haswell)
+    group="ck-haswell"
+    ;;
+  broadwell)
+    group="ck-broadwell"
+    ;;
+  skylake)
+    group="ck-skylake"
+    ;;
+  pentium4 | prescott | nocona)
+    group="ck-p4"
+    ;;
+  pentm | pentium-m)
+    group="ck-pentm"
+    ;;
+  athlon | athlon-4 | athlon-tbird | athlon-mp | k8-sse3)
+    group="ck-kx"
+    ;;
+  amdfam10)
+    group="ck-k10"
+    ;;
+  btver1)
+    group="ck-bobcat"
+    ;;
+  bdver1)
+    group="ck-bulldozer"
+    ;;
+  bdver2)
+    group="ck-piledriver"
+    ;;
+  znver1)
+    group="ck-zen"
+    ;;
+  else)
+    group="ck"
+    ;;
+  esac
+
+  sudo pacman -Syu linux-${group}{,-headers}
+}
+
 pacman_unofficial_packages() {
   # kernel-modules-hook
   sudo pacman -Syu kernel-modules-hook
   sudo systemctl enable linux-modules-cleanup
   sudo systemctl start linux-modules-cleanup
 
+  # install linux-ck-march
+  linux_ck
+
   # install unofficial packages
   sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git yay-git \
     clion clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
-    mpv-git nerd-fonts-complete youtube-dl-git \
-    linux-lily linux-lily-headers nvidia-lily virtualbox-host-modules-lily vmware-workstation
+    mpv-git nerd-fonts-complete youtube-dl-git vmware-workstation \
+    nvidia-dkms broadcom-wl-dkms virtualbox-host-dkms
 
   # pkgfile
   sudo systemctl enable pkgfile-update.timer
@@ -89,6 +164,7 @@ pacman_init() {
   # add unofficial repo
   pacman_archlinuxcn
   pacman_peeweep
+  pacman_ck
   # install packages
   pacman_official_packages
   pacman_unofficial_packages
