@@ -34,7 +34,7 @@ pacman_ck() {
 }
 
 linux_ck() {
-  march=$(gcc -c -Q -march=native --help=target | grep march | awk '{print $2}' | head -n1)
+  march=$(gcc -c -Q -march=native --help=target -o /dev/null | grep march | awk '{print $2}' | head -n1)
   case "${march}" in
   bonnell)
     group="ck-atom"
