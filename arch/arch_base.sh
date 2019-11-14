@@ -87,7 +87,7 @@ linux_ck() {
   znver1)
     group="ck-zen"
     ;;
-  else)
+  *)
     group="ck"
     ;;
   esac
