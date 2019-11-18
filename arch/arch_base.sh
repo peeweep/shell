@@ -88,11 +88,11 @@ linux_ck() {
     group="ck-zen"
     ;;
   *)
-    group="ck"
+    group="ck-generic"
     ;;
   esac
 
-  sudo pacman -Syu linux-${group}{,-headers}
+  sudo pacman -Syu ${group}
 }
 
 pacman_unofficial_packages() {
