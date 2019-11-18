@@ -181,7 +181,7 @@ fcitx5_wayland() {
   {
     echo "GTK_IM_MODULE=fcitx5"
     echo "QT_IM_MODULE=fcitx5"
-    echo "XMODIFIERS=\"@im=fcitx\""
+    echo "XMODIFIERS=\"@im=fcitx5\""
   } | tee ~/.pam_environment
   echo "[✔] Add fcitx5 config to pam_environment"
 }
