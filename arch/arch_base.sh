@@ -200,11 +200,9 @@ fcitx5_init() {
   fcitx5_profile
   case "${XDG_SESSION_TYPE}" in
   x11)
-    fcitx5_profile
     fcitx5_x11
     ;;
   wayland)
-    fcitx5_profile
     fcitx5_wayland
     ;;
   esac
