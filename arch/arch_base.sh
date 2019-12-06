@@ -101,17 +101,18 @@ pacman_unofficial_packages() {
   sudo systemctl enable linux-modules-cleanup
   sudo systemctl start linux-modules-cleanup
 
-  # install unofficial packages
-  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git yay-git \
-    clion clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
-    p7zip-zstd-codec unzip-iconv nerd-fonts-complete broadcom-wl-dkms virtualbox-host-dkms
-
   # install kernel
   if [[ $(sudo dmidecode -s bios-vendor) == "Apple Inc." ]]; then
     sudo pacman -S linux-macbook linux-macbook-headers
   else
     linux_ck
   fi
+
+  # install unofficial packages
+  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git yay clion \
+    clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
+    p7zip-zstd-codec unzip-iconv nerd-fonts-complete broadcom-wl-dkms \
+    virtualbox-host-dkms
 
   # install gpu driver
   gpu_model=$(lspci -mm | awk -F '\"|\" \"|\\(' '/"Display|"3D|"VGA/')
