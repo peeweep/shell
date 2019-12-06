@@ -115,10 +115,10 @@ pacman_unofficial_packages() {
 
   # install gpu driver
   gpu_model=$(lspci -mm | awk -F '\"|\" \"|\\(' '/"Display|"3D|"VGA/')
-  if [[ $(echo ${gpu_model} | grep NVIDIA) ]]; then
+  if echo "${gpu_model}" | grep NVIDIA; then
     sudo pacman -S nvidia-dkms
   fi
-  if [[ $(echo ${gpu_model} | grep Intel) ]]; then
+  if echo "${gpu_model}" | grep Intel; then
     # I'm not clear intel device
     sudo pacman -S mesa xf86-video-intel
   fi
@@ -172,51 +172,18 @@ pacman_init() {
   pacman_unofficial_packages
 }
 
-fcitx5_profile() {
-  sudo killall -9 fcitx5
-  mkdir -p ~/.config/fcitx5
-  rm ~/.config/fcitx5/profile
-  cp conf/fcitx5_profile ~/.config/fcitx5/profile
-}
-
-fcitx5_wayland() {
-  {
-    echo "GTK_IM_MODULE=fcitx5"
-    echo "QT_IM_MODULE=fcitx5"
-    echo "XMODIFIERS=\"@im=fcitx5\""
-  } | tee ~/.pam_environment
-  echo "[✔] Add fcitx5 config to pam_environment"
-}
-
-fcitx5_x11() {
-  {
-    echo "export GTK_IM_MODULE=fcitx5"
-    echo "export XMODIFIERS=@im=fcitx5"
-    echo "export QT_IM_MODULE=fcitx5"
-    echo "fcitx5 &"
-  } | tee -a ~/.xprofile
-  echo "[✔] Add fcitx5 config to xprofile"
-}
-
 fcitx5_init() {
-  fcitx5_profile
-  case "${XDG_SESSION_TYPE}" in
-  x11)
-    fcitx5_x11
-    ;;
-  wayland)
-    fcitx5_wayland
-    ;;
-  esac
+  cd "${dotfiles}" || exit
+  stow fcitx5
+  cd "${script_path}" || exit
 }
 
 omz_init() {
   sudo mkdir -p /usr/share/fonts/OTF/
   sudo pacman -S nerd-fonts-complete zsh zsh-autosuggestions oh-my-zsh-git zsh-theme-powerlevel9k
   sudo ln -s /usr/share/zsh-theme-powerlevel9k /usr/share/oh-my-zsh/themes/zsh-theme-powerlevel9k
-  cp /usr/share/oh-my-zsh/zshrc ~/.zshrc
-  cd ~ || exit
-  patch -p1 <"${script_path}"/zshrc.patch
+  cd "${dotfiles}" || exit
+  stow zsh
   cd "${script_path}" || exit
 }
 
@@ -232,24 +199,15 @@ sound_panel() {
 }
 
 xfceterminal_scheme() {
-  git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
-  mkdir -p ~/.local/share/xfce4/terminal
-  cp -r ~/Documents/iTerm2-Color-Schemes/xfce4terminal/colorschemes ~/.local/share/xfce4/terminal/
-  rm -rf ~/Documents/iTerm2-Color-Schemes
-  echo "You can change xfce4-terminal Color theme at Edit >> Preferences >> Color >> Presets,
-I recommand [Calamity] / [Builtin Tango Dark]."
-}
-
-download_iTerm2_scheme() {
-  sudo wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/konsole/"$1".colorscheme -O /usr/share/konsole/"$1".colorscheme
+  cd "${dotfiles}" || exit
+  stow xfce4-terminal
+  cd "${script_path}" || exit
 }
 
 add_konsole_scheme() {
-  # git clone https://github.com/mbadolato/iTerm2-Color-Schemes ~/Documents/iTerm2-Color-Schemes
-  # sudo cp ~/Documents/iTerm2-Color-Schemes/konsole/*.colorscheme /usr/share/konsole
-  # rm -rf ~/Documents/iTerm2-Color-Schemes
-  download_iTerm2_scheme Hivacruz
-  download_iTerm2_scheme Dracula
+  cd "${dotfiles}" || exit
+  sudo stow konsole --target /
+  cd "${script_path}" || exit
 }
 
 desktop_session() {
@@ -271,7 +229,11 @@ script_path=$(
   pwd
 )
 
+dotfiles="$HOME/.dotfiles"
+git clone https://git.0x0.ee/peeweep/stow "${dotfiles}"
 pacman_init
 fcitx5_init
 desktop_session
-cp conf/clang-format ~/.clang-format
+cd "${dotfiles}" || exit
+stow clang
+cd "${script_path}" || exit
