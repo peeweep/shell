@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 pacman_archlinuxcn() {
   {
@@ -101,50 +101,52 @@ pacman_unofficial_packages() {
   sudo systemctl enable linux-modules-cleanup
   sudo systemctl start linux-modules-cleanup
 
-  # install linux-ck-march
-  linux_ck
-
   # install unofficial packages
   sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git yay-git \
     clion clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
-    mpv-git nerd-fonts-complete youtube-dl-git vmware-workstation \
-    nvidia-dkms broadcom-wl-dkms virtualbox-host-dkms
+    p7zip-zstd-codec unzip-iconv nerd-fonts-complete broadcom-wl-dkms virtualbox-host-dkms
+
+  # install kernel
+  if [[ $(sudo dmidecode -s bios-vendor) == "Apple Inc." ]]; then
+    sudo pacman -S linux-macbook linux-macbook-headers
+  else
+    linux_ck
+  fi
+
+  # install gpu driver
+  gpu_model=$(lspci -mm | awk -F '\"|\" \"|\\(' '/"Display|"3D|"VGA/')
+  if [[ $(echo ${gpu_model} | grep NVIDIA) ]]; then
+    sudo pacman -S nvidia-dkms
+  fi
+  if [[ $(echo ${gpu_model} | grep Intel) ]]; then
+    # I'm not clear intel device
+    sudo pacman -S mesa xf86-video-intel
+  fi
+
+  sudo pacman -Rs nvidia
+  sudo pacman -Rs linux
+  sudo pacman -Rs linux-headers
+  sudo pacman -Rs nvidia-lts
+  sudo pacman -Rs linux-lts
+  sudo pacman -Rs linux-lts-headers
+
+  # rebuild grub
+  sudo grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+}
+
+pacman_official_packages() {
+  sudo pacman -Syu alsa-utils autopep8 axel bind-tools chromium cloc cmake dmidecode exfat-utils \
+    feh flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man mpv ncdu neofetch neovim \
+    net-tools noto-fonts-cjk noto-fonts-emoji noto-fonts-extra p7zip pacman-contrib \
+    pkgfile pkgstats pulseaudio python-pylint screen screenfetch shellcheck shfmt telegram-desktop \
+    thunderbird tldr tree ttf-opensans unrar uptimed virtualbox virtualbox-guest-iso wget \
+    xournalpp youtube-dl zstd
 
   # pkgfile
   sudo systemctl enable pkgfile-update.timer
   sudo systemctl start pkgfile-update.timer
   sudo pkgfile --update
-
-  # Remove old kernel and nvidia driver
-  case "$(pacman -Qq nvidia)" in
-  nvidia)
-    sudo pacman -Rs nvidia
-    sudo pacman -Rs linux
-    sudo pacman -Rs linux-headers
-    ;;
-  nvidia-lts)
-    sudo pacman -Rs nvidia-lts
-    sudo pacman -Rs linux-lts
-    sudo pacman -Rs linux-lts-headers
-    ;;
-  esac
-
-  # rebuild grub
-  sudo grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=grub
-  sudo grub-mkconfig -o /boot/grub/grub.cfg
-
-  # vmware-workstation
-  sudo systemctl enable vmware-networks.service vmware-usbarbitrator.service vmware-hostd.service
-  sudo systemctl start vmware-networks.service vmware-usbarbitrator.service vmware-hostd.service
-  sudo modprobe -a vmw_vmci vmmon
-}
-
-pacman_official_packages() {
-  sudo pacman -Syu autopep8 axel bind-tools chromium cloc cmake exfat-utils feh \
-    flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man ncdu neofetch net-tools \
-    noto-fonts-cjk noto-fonts-emoji noto-fonts-extra p7zip pacman-contrib pkgfile \
-    pkgstats python-pylint screen screenfetch shellcheck shfmt telegram-desktop \
-    thunderbird tldr tree ttf-opensans unrar uptimed virtualbox virtualbox-guest-iso wget
 }
 
 pacman_haveged() {
