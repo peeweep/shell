@@ -237,4 +237,5 @@ fcitx5_init
 desktop_session
 cd "${dotfiles}" || exit
 stow clang
+sudo stow makepkg --target /
 cd "${script_path}" || exit
