@@ -137,12 +137,12 @@ pacman_unofficial_packages() {
 }
 
 pacman_official_packages() {
-  sudo pacman -Syu alsa-utils autopep8 axel bind-tools chromium cloc cmake dmidecode exfat-utils \
-    feh flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man mpv ncdu neofetch neovim \
-    net-tools noto-fonts-cjk noto-fonts-emoji noto-fonts-extra p7zip pacman-contrib \
-    pkgfile pkgstats pulseaudio python-pylint screen screenfetch shellcheck shfmt telegram-desktop \
-    thunderbird tldr tree ttf-opensans unrar uptimed virtualbox virtualbox-guest-iso wget \
-    xournalpp youtube-dl zstd
+  sudo pacman -Syu alsa-utils autopep8 axel bind-tools chromium cloc cmake dmidecode \
+    exfat-utils feh flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man mpv ncdu \
+    neofetch neovim net-tools noto-fonts-cjk noto-fonts-emoji noto-fonts-extra p7zip \
+    pacman-contrib pkgfile pkgstats pulseaudio python-pylint screen screenfetch \
+    shellcheck shfmt stow telegram-desktop thunderbird tldr tree ttf-opensans unrar \
+    uptimed virtualbox virtualbox-guest-iso wget xournalpp youtube-dl zstd
 
   # pkgfile
   sudo systemctl enable pkgfile-update.timer
