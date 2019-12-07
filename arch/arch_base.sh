@@ -175,7 +175,7 @@ pacman_init() {
 
 fcitx5_init() {
   cd "${dotfiles}" || exit
-  stow fcitx5
+  stow --no-folding fcitx5
   cd "${script_path}" || exit
 }
 
@@ -201,13 +201,13 @@ sound_panel() {
 
 xfceterminal_scheme() {
   cd "${dotfiles}" || exit
-  stow xfce4-terminal
+  stow --no-folding xfce4-terminal
   cd "${script_path}" || exit
 }
 
 add_konsole_scheme() {
   cd "${dotfiles}" || exit
-  sudo stow konsole --target /
+  sudo stow --no-folding konsole --target /
   cd "${script_path}" || exit
 }
 
@@ -241,5 +241,5 @@ stow git
 sudo pacman -S mutt msmtp
 stow mutt
 sudo mv /etc/makepkg /etc/makepkg.pacsave
-sudo stow makepkg --target /
+sudo stow --no-folding makepkg --target /
 cd "${script_path}" || exit
