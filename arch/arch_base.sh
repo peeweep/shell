@@ -141,8 +141,8 @@ pacman_official_packages() {
     exfat-utils feh flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man mpv ncdu \
     neofetch neovim net-tools noto-fonts-cjk noto-fonts-emoji noto-fonts-extra numlockx \
     p7zip pacman-contrib pkgfile pkgstats pulseaudio python-pylint screen screenfetch \
-    shellcheck shfmt stow telegram-desktop thunderbird tldr tree ttf-opensans unrar \
-    uptimed virtualbox virtualbox-guest-iso wget xournalpp youtube-dl zstd
+    shellcheck shfmt stow telegram-desktop thunderbird tldr tmux tree ttf-opensans unrar \
+    uptimed virtualbox virtualbox-guest-iso wget whois xournalpp youtube-dl zstd
 
   # pkgfile
   sudo systemctl enable pkgfile-update.timer
