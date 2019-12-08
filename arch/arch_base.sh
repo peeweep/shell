@@ -5,6 +5,7 @@ pacman_archlinuxcn() {
     echo "[archlinuxcn]"
     echo "SigLevel = Never"
     echo "Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/\$arch"
+    echo "Server = https://repo.archlinuxcn.org/archlinux-cn/\$arch"
   } | sudo tee -a /etc/pacman.conf
   sudo pacman -Syu archlinuxcn-keyring
   echo "[✔]archlinuxcn-keyring installed"
@@ -15,6 +16,7 @@ pacman_peeweep() {
     echo "[peeweep]"
     echo "SigLevel = Never"
     echo "Server = https://peeweep.duckdns.org/archlinux/x86_64"
+    echo "Server = https://peeweep.de/~pkg/archlinux/x86_64"
   } | sudo tee -a /etc/pacman.conf
   sudo pacman -Syu curl
   curl https://peeweep.de/pubring.gpg | sudo pacman-key -a -
@@ -28,6 +30,7 @@ pacman_ck() {
     echo "[repo-ck]"
     echo "SigLevel = Never"
     echo "Server = https://mirrors.tuna.tsinghua.edu.cn/repo-ck/\$arch"
+    echo "Server = http://repo-ck.com/x86_64/"
   } | sudo tee -a /etc/pacman.conf
   sudo pacman-key -r 5EE46C4C && sudo pacman-key --lsign-key 5EE46C4C
   sudo pacman -Syu
