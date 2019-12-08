@@ -105,6 +105,7 @@ pacman_unofficial_packages() {
   if [[ $(sudo dmidecode -s bios-vendor) == "Apple Inc." ]]; then
     sudo pacman -S linux-macbook linux-macbook-headers
   else
+    pacman_ck
     linux_ck
   fi
 
@@ -157,8 +158,10 @@ pacman_haveged() {
 }
 
 pacman_mirrorlist() {
-  sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-  sudo cp conf/mirrorlist /etc/pacman.d/mirrorlist
+  cd "${dotfiles}" || exit
+  # If use linux-macbook, don't need the repo-ck in pacman.conf, so we only symlink mirrorlist
+  sudo ln -sf "${dotfiles}"/pacman/etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist
+  cd "${script_path}" || exit
 }
 
 pacman_init() {
@@ -167,7 +170,6 @@ pacman_init() {
   # add unofficial repo
   pacman_archlinuxcn
   pacman_peeweep
-  pacman_ck
   # install packages
   pacman_official_packages
   pacman_unofficial_packages
