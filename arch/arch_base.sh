@@ -236,7 +236,7 @@ script_path=$(
 )
 
 dotfiles="$HOME/.dotfiles"
-git clone https://git.0x0.ee/peeweep/stow "${dotfiles}"
+git clone https://github.com/peeweep/dotfiles "${dotfiles}"
 pacman_init
 fcitx5_init
 desktop_session
