@@ -243,7 +243,7 @@ desktop_session
 cd "${dotfiles}" || exit
 stow clang
 stow git
-sudo pacman -S mutt msmtp
+sudo pacman -S mutt neomutt msmtp
 stow mutt
 sudo mv /etc/makepkg /etc/makepkg.pacsave
 sudo stow --no-folding makepkg --target /
