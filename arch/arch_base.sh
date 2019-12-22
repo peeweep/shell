@@ -116,7 +116,7 @@ pacman_unofficial_packages() {
   sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git yay clion \
     clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
     p7zip-zstd-codec unzip-iconv nerd-fonts-complete broadcom-wl-dkms \
-    virtualbox-host-dkms
+    virtualbox-host-dkms supersm
 
   # install gpu driver
   gpu_model=$(lspci -mm | awk -F '\"|\" \"|\\(' '/"Display|"3D|"VGA/')
@@ -145,7 +145,7 @@ pacman_official_packages() {
     exfat-utils feh flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man mpv ncdu \
     neofetch neovim net-tools noto-fonts-cjk noto-fonts-emoji noto-fonts-extra numlockx \
     p7zip pacman-contrib pkgfile pkgstats pulseaudio python-pylint screen screenfetch \
-    shellcheck shfmt stow telegram-desktop thunderbird tldr tmux tree ttf-opensans unrar \
+    shellcheck shfmt telegram-desktop thunderbird tldr tmux tree ttf-opensans unrar \
     uptimed virtualbox virtualbox-guest-iso wget whois xournalpp youtube-dl zstd
 
   # pkgfile
@@ -180,7 +180,7 @@ pacman_init() {
 
 fcitx5_init() {
   cd "${dotfiles}" || exit
-  stow --no-folding fcitx5
+  supersm fcitx5
   cd "${script_path}" || exit
 }
 
@@ -189,7 +189,7 @@ omz_init() {
   sudo pacman -S nerd-fonts-complete zsh zsh-autosuggestions oh-my-zsh-git zsh-theme-powerlevel9k
   sudo ln -s /usr/share/zsh-theme-powerlevel9k /usr/share/oh-my-zsh/themes/zsh-theme-powerlevel9k
   cd "${dotfiles}" || exit
-  stow zsh
+  supersm zsh
   cd "${script_path}" || exit
 }
 
@@ -206,13 +206,13 @@ sound_panel() {
 
 xfceterminal_scheme() {
   cd "${dotfiles}" || exit
-  stow --no-folding xfce4-terminal
+  supersm xfce4-terminal
   cd "${script_path}" || exit
 }
 
 add_konsole_scheme() {
   cd "${dotfiles}" || exit
-  sudo stow --no-folding konsole --target /
+  sudo supersm konsole --target /
   cd "${script_path}" || exit
 }
 
@@ -240,11 +240,18 @@ git clone https://github.com/peeweep/dotfiles "${dotfiles}"
 pacman_init
 fcitx5_init
 desktop_session
+
+#### begin symlink update
 cd "${dotfiles}" || exit
-stow clang
-stow git
-sudo pacman -S mutt neomutt msmtp
-stow mutt
-sudo mv /etc/makepkg /etc/makepkg.pacsave
-sudo stow --no-folding makepkg --target /
+# clang
+supersm clang
+# git
+supersm git
+# makepkg
+sudo supersm makepkg --target /
+# mutt
+sudo pacman -S neomutt msmtp
+supersm mutt
+# pacman
+sudo supersm pacman --target /
 cd "${script_path}" || exit
