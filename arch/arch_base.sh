@@ -113,10 +113,8 @@ pacman_unofficial_packages() {
   fi
 
   # install unofficial packages
-  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git yay clion \
-    clion-cmake clion-gdb clion-jre clion-lldb visual-studio-code-bin \
-    p7zip-zstd-codec unzip-iconv nerd-fonts-complete broadcom-wl-dkms \
-    virtualbox-host-dkms supersm
+  sudo pacman -Syu broadcom-wl-dkms fcitx5-chinese-addons-git fcitx5-gtk-git \
+    p7zip-zstd-codec nerd-fonts-complete supersm visual-studio-code-bin unzip-iconv
 
   # install gpu driver
   gpu_model=$(lspci -mm | awk -F '\"|\" \"|\\(' '/"Display|"3D|"VGA/')
@@ -144,9 +142,9 @@ pacman_official_packages() {
   sudo pacman -Syu alsa-utils autopep8 axel bind-tools chromium cloc cmake dmidecode \
     exfat-utils feh flameshot gdb htop jdk-openjdk jq jre-openjdk lldb man mpv ncdu \
     neofetch neovim net-tools noto-fonts-cjk noto-fonts-emoji noto-fonts-extra numlockx \
-    p7zip pacman-contrib pkgfile pkgstats pulseaudio python-pylint screen screenfetch \
-    shellcheck shfmt telegram-desktop thunderbird tldr tmux tree ttf-opensans unrar \
-    uptimed virtualbox virtualbox-guest-iso wget whois xournalpp youtube-dl zstd
+    p7zip pacman-contrib pavucontrol pkgfile pkgstats pulseaudio python-pylint screen \
+    screenfetch shellcheck shfmt telegram-desktop tldr tmux tree ttf-opensans unrar \
+    uptimed wget whois youtube-dl zstd
 
   # pkgfile
   sudo systemctl enable pkgfile-update.timer
