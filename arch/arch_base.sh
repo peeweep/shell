@@ -107,14 +107,19 @@ pacman_unofficial_packages() {
   # install kernel
   if [[ $(sudo dmidecode -s bios-vendor) == "Apple Inc." ]]; then
     sudo pacman -S linux-macbook linux-macbook-headers
+    sudo pacman -S xorg-xrandr upower tlp-rdw broadcom-wl-dkms
+    sudo systemctl enable macbook-wakeup.service
+    sudo systemctl enable tlp.service tlp-sleep.service
+    sudo sed -i 's/blacklist brcmfmac/\#blacklist brcmfmac/g' \
+      /usr/lib/modprobe.d/broadcom-wl-dkms.conf
   else
     pacman_ck
     linux_ck
   fi
 
   # install unofficial packages
-  sudo pacman -Syu broadcom-wl-dkms fcitx5-chinese-addons-git fcitx5-gtk-git \
-    p7zip-zstd-codec nerd-fonts-complete supersm visual-studio-code-bin unzip-iconv
+  sudo pacman -Syu fcitx5-chinese-addons-git fcitx5-gtk-git p7zip-zstd-codec \
+    nerd-fonts-complete supersm visual-studio-code-bin unzip-iconv
 
   # install gpu driver
   gpu_model=$(lspci -mm | awk -F '\"|\" \"|\\(' '/"Display|"3D|"VGA/')
@@ -134,6 +139,7 @@ pacman_unofficial_packages() {
   sudo pacman -Rs linux-lts-headers
 
   # rebuild grub
+  sudo pacman -Syu grub efibootmgr
   sudo grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=grub
   sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
@@ -159,10 +165,7 @@ pacman_haveged() {
 }
 
 pacman_mirrorlist() {
-  cd "${dotfiles}" || exit
-  # If use linux-macbook, don't need the repo-ck in pacman.conf, so we only symlink mirrorlist
-  sudo ln -sf "${dotfiles}"/pacman/etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist
-  cd "${script_path}" || exit
+  sudo cp "${dotfiles}"/pacman/etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist
 }
 
 pacman_init() {
@@ -177,18 +180,14 @@ pacman_init() {
 }
 
 fcitx5_init() {
-  cd "${dotfiles}" || exit
   supersm fcitx5
-  cd "${script_path}" || exit
 }
 
 omz_init() {
   sudo mkdir -p /usr/share/fonts/OTF/
   sudo pacman -S nerd-fonts-complete zsh zsh-autosuggestions oh-my-zsh-git zsh-theme-powerlevel9k
   sudo ln -s /usr/share/zsh-theme-powerlevel9k /usr/share/oh-my-zsh/themes/zsh-theme-powerlevel9k
-  cd "${dotfiles}" || exit
   supersm zsh
-  cd "${script_path}" || exit
 }
 
 spacevim() {
@@ -203,15 +202,11 @@ sound_panel() {
 }
 
 xfceterminal_scheme() {
-  cd "${dotfiles}" || exit
   supersm xfce4-terminal
-  cd "${script_path}" || exit
 }
 
 add_konsole_scheme() {
-  cd "${dotfiles}" || exit
   sudo supersm konsole --target /
-  cd "${script_path}" || exit
 }
 
 desktop_session() {
@@ -228,19 +223,21 @@ desktop_session() {
   spacevim
 }
 
-script_path=$(
-  cd "$(dirname "${BASH_SOURCE[0]}")" || exit
-  pwd
-)
+i3gaps() {
+  sudo pacman -S i3-gaps i3status-rust-git xorg-xrdb
+  supersm i3
+  xfceterminal_scheme
+}
 
 dotfiles="$HOME/.dotfiles"
 git clone https://github.com/peeweep/dotfiles "${dotfiles}"
+cd "${dotfiles}" || exit
 pacman_init
 fcitx5_init
 desktop_session
+i3gaps
 
 #### begin symlink update
-cd "${dotfiles}" || exit
 # clang
 supersm clang
 # git
@@ -252,4 +249,3 @@ sudo pacman -S neomutt msmtp
 supersm mutt
 # pacman
 sudo supersm pacman --target /
-cd "${script_path}" || exit
